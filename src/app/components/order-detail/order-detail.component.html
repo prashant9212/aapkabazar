@@ -1,0 +1,278 @@
+<main class="main">
+  <div class="container UserprofileBox">
+    <div class="row">
+      <div class="col-lg-3 side-menu">
+        <app-profile-sidebar></app-profile-sidebar>
+      </div>
+      <div class="col-lg-9">
+        <div class="row ">
+          <div class="col-lg-8">
+            <div class="card mb-5 detailsBox">
+              <div class="card-header subscription-header">
+                <div class="row align-items-center  px-sm-4 ">
+                  <div class="col-sm-6">
+                    <h6 class="font-weight-bold mb-0">Order ID: {{order?.id}} ({{order.totalProduct}} items)</h6>
+                  </div>
+                  <div class="col-sm-6 ">
+                    <div class="btn-group float-sm-right align-items-center">
+                      <button mdbBtn type="button" class="helpchatbtn" mdbWavesEffect
+                        *ngIf="order?.status=='confirmed' || order?.status=='pending'"
+                        (click)="openModal(cancel)">Cancel Order</button>
+                      <button mdbBtn type="button" class="helpchatbtn" mdbWavesEffect
+                        *ngIf="order?.status==='delivered' && order.isIssueRaised==false"
+                        (click)="issueModal.show()">Issue</button>
+                      <!-- <button mdbBtn type="button" class=" outline-primary-btn btn-sm invoice" mdbWavesEffect *ngIf="order?.status==='delivered'" (click)=getInvoice()>GET INVOICE</button> -->
+                      <button type="button" mdbBtn class="helpchatbtn" data-toggle="modal"
+                        data-target="#basicExample" (click)="frame.show();getChatDetail()" mdbWavesEffect>
+                        Chat
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- <hr class="grey-hr accent-2 mb-0 mt-0 d-inline-block mx-auto" style="width: 100%;"> -->
+                <!-- <div class="row">
+                          <div class="col-12 d-flex justify-content-between ">
+
+                          </div>
+                        </div> -->
+              </div>
+
+              <div class="card-body p-0" *ngFor="let product of order.products">
+                <div class="row mx-1 ">
+
+                  <div class="col-sm-12">
+                    <div class="row px-3 align-items-center">
+                      <div class="col-2  py-3">
+                        <img class="d-block mx-auto my-2 img-fluid"
+                          src="{{ product?.id | image}}/{{ product?.images[0] | imageSize:120}}">
+                      </div>
+                      <div class="col-10 user-subscription">
+                        <h5 class="mb-1">{{ product?.name }}</h5>
+                        <!-- <p class="mb-1"> {{ product?.brand?.name }}</p> -->
+                        <p>Price : <i class="fas fa-inr-sign"></i> <span> ₹{{ product?.sellPrice }} </span> <span
+                          class="grey-text" *ngIf="product?.sellPrice!=product?.price"> <del>₹
+                            {{ product?.price }}</del></span>
+                        </p>
+                        <!-- <p>{{ product?.recommendedAttribute }}</p> -->
+                        <p>Quantity : {{ product?.quantity }} &nbsp; | &nbsp;
+                          <span>Status : <span class="custom-primary-color">{{ order.status | titlecase}} </span></span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <p class="order">
+                  <span><strong>Order Created :</strong> {{order?.date | date:'d/M/yy'}}</span> &nbsp; | &nbsp;
+                  <!-- <span class="mb-0" *ngIf="order?.status=='delivered'">
+                    <strong>Delivery Date : </strong>{{order?.deliveredDate | date:'medium'}}
+                  </span> -->                              
+                <span class="order cancelOrder" *ngIf="order?.products">
+                  <strong>Time Slot :</strong> {{order?.products[0]?.deliveryTime.slot }} <strong>&nbsp; | &nbsp; Delivery Date : </strong> {{order?.deliveryDate | date:'medium'}}
+                </span>
+              </p> 
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 detailsBox">
+            <div class="card">
+              <div class="card-body price-table">
+                <h5>Delivery Address</h5>
+                <p class="address-font">
+                  <span *ngIf="order && order?.address?.line1">
+                    {{order?.address?.line1 | titlecase}},
+                  </span>
+                  <span *ngIf="order && order?.address?.line2">
+                    {{order?.address?.line2 | titlecase}},
+                  </span>
+                  <span *ngIf="order && order?.address?.fullAddress">
+                    {{order?.address?.fullAddress | titlecase}}
+                  </span>
+                </p>
+                <p class="mobile">Mobile No. : {{ order?.address?.mobileNo }}</p>
+                <hr class="grey-hr accent-2 mb-0 mt-0 d-inline-block mx-auto" style="width: 100%;">
+                <h5>Payment Summary</h5>
+                <p>Total Amount <span class="float-right"> <i class="fa fa-inr"></i> {{ totalAmount }}</span></p>
+                <p>Offers Discount <span class="float-right">- <i class="fa fa-inr"></i> {{ order?.totalSaving }}</span>
+                </p>
+                <p *ngIf="order.promocode">Promocode <span class="float-right">{{ order?.promocode }}</span></p>
+                <p *ngIf="order.promocode">Coupon Discount<span class="float-right"><i class="fa fa-inr"></i> {{
+                    order?.couponDiscount }}</span></p>
+
+              </div>
+              <div class="card-footer">
+                <p class="mb-0">Sub Total <span class="float-right">
+                    <i class="fa fa-inr"></i> {{ order?.orderAmount-order?.deliveryCharge }}</span>
+              </div>
+              <div class="card-body price-table">
+                <p *ngIf="order?.deliveryCharge!=0">Delivery Charge <span class="float-right">{{ order?.deliveryCharge
+                    }}</span></p>
+                <p *ngIf="order?.deliveryCharge==0">Delivery Charge <span class="float-right">Free</span></p>
+              </div>
+              <hr class="grey-hr accent-2 mb-0 mt-0 d-inline-block mx-auto" style="width: 100%;">
+              <div class="card-footer price-footer mt-0">Order Total <span class="float-right">
+                  <i class="fa fa-inr"></i> {{ order?.orderAmount }}</span></div>
+              <div class="card-body">
+                <p class="mb-0">Total Saving <span class="float-right">
+                    <i class="fa fa-inr"></i> {{ totalSaving }}</span></p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<div mdbModal #issueModal="mdbModal" style="overflow-y:auto;" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="myBasicModalLabel" aria-hidden="true" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-content-text">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" (click)='issueModal.hide()'>&times;</span>
+        </button>
+        <div class="row px-3 py-2">
+          <div class="col-md-12">
+            <form #complaint="ngForm" [formGroup]='issueForm' (ngSubmit)='raiseIssue()'>
+              <h5 class="my-2 text-center ml-1">Please enter your query here</h5>
+              <p class="ml-1 mt-4 mb-0 grey-text">Issue Type<sup class="text-danger">*</sup></p>
+              <select name="cars" class="custom-select" formControlName='type'>
+                <option> Expired item(s) received. </option>
+                <option> The price difference in item(s) received </option>
+                <option> Quality/Damage issue in item(s) delivered </option>
+                <option> Item(s) in my order was missing</option>
+                <option> Wrong item(s) received </option>
+                <option> I haven't received my refund.</option>
+                <option> I have received incorrect refund</option>
+                <option> Amount debited twice</option>
+                <option> Other</option>
+              </select>
+              <p class="ml-1 mt-4 mb-0 grey-text" *ngIf="issueForm.value['type']=='Other'">Subject<sup
+                  class="text-danger">*</sup></p>
+              <input type="subject" class="form-control" id="subject" formControlName='subject'
+                *ngIf="issueForm.value['type']=='Other'">
+              <small class='text-danger'
+                *ngIf='issueForm.get("subject").touched && issueForm.get("subject").pristine'>Complain subject
+                is required</small>
+
+              <p class="ml-1 mb-0 mt-4 grey-text required">Your Email (We will reply to you on this
+                email)<sup class="text-danger">*</sup></p>
+              <input type="email" class="form-control" id="email" formControlName='email'>
+              <small class='text-danger' *ngIf='issueForm.get("email").touched && issueForm.get("email").pristine'>Email
+                is
+                required</small>
+              <small class='text-danger' *ngIf='issueForm.get("email").dirty && issueForm.get("email").invalid'>Valid
+                email is
+                required</small>
+
+              <p class="ml-1 mb-0 mt-4 grey-text">Mobile No.<sup class="text-danger">*</sup></p>
+              <input type="number" class="form-control" id="mobile" formControlName='mobile'>
+              <small class='text-danger'
+                *ngIf='issueForm.get("mobile").touched && issueForm.get("mobile").pristine'>Mobile Number is
+                required</small>
+              <small class='text-danger' *ngIf='issueForm.get("mobile").dirty && issueForm.get("mobile").invalid'>A
+                valid Mobile number
+                is required</small>
+
+
+              <p class="ml-1 mt-4 mb-0 grey-text">Message (Tell us about the issue)<sup class="text-danger">*</sup></p>
+              <div class="input-group">
+                <div class="field span3">
+                  <textarea class="form-control" wrap='off' rows="4" cols="200" formControlName='message'></textarea>
+                  <small class='text-danger'
+                    *ngIf='issueForm.get("message").touched && issueForm.get("message").pristine'>Message is
+                    required</small>
+
+                </div>
+              </div>
+              <button mdbBtn type="submit" (click)='issueModal.hide()' class="mt-4 primary-btn mx-auto d-block"
+                mdbWavesEffect [disabled]='!issueForm.valid'>Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #cancel>
+  <div class="modal-header" style="background: rgb(255, 255, 254);">
+    <h4 class="modal-title pull-left">Are You Sure</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" style="background: rgb(255, 255, 254);">
+    <div class="d-flex justify-content-center">
+      <button type="button" class="btn mbbtn" (click)="cancelOrder()" (click)="modalRef.hide()">Yes</button>
+      <button type="button" class="btn calcel-mbbtn" (click)="modalRef.hide()">No</button>
+    </div>
+  </div>
+</ng-template>
+
+<div mdbModal style="overflow-y: auto" #frame="mdbModal" class="modal fade right" id="frameModalTop" tabindex="-1"
+  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-full-height modal-right modal-notify modal-info" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">Aap Ka Bazar Assist</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body mb-modal-body">
+        <!-- <div class="msg-box" *ngIf='chatdata?.messages?.length>=1'>
+          <div class="admin-box">
+            <p class="msg">Welcome to Aap Ka Bazar. Thank you for your message. We're unavailable right now, but will respond as soon as possible.</p>
+            <p class="time">{{todayDate | date : "h:mm a"}}</p>
+          </div>
+        </div> -->
+        <ng-container *ngIf='chatdata?.messages?.length>0'>
+          <div *ngFor='let msg of chatdata?.messages'>
+            <div class="msg-box-user" *ngIf='msg?.userMsg'>
+              <div class="user-box">
+                <p class="msg">{{msg?.userMsg}}</p>
+                <p class="time">{{msg?.time | date : "medium"}}</p>
+              </div>
+            </div>
+            <div class="msg-box" *ngIf='msg?.adminMsg'>
+              <div class="admin-box">
+                <p class="msg">{{msg?.adminMsg}}</p>
+                <p class="time">{{msg?.time | date : "medium"}}</p>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <!--Footer-->
+      <form (ngSubmit)='sendMsg()'>
+        <div class="modal-footer justify-content-center flex-nowrap">
+          <!-- <button type="button" mdbBtn class="btn-sm icon-btn add" data-toggle="modal" data-target="#basicExample"
+            (click)="frame.show()" mdbWavesEffect>
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </button> -->
+
+          <input class="text-msg" type="text" [formControl]='message'>
+
+          <button type="submit" mdbBtn class="btn-sm icon-btn" data-toggle="modal" data-target="#basicExample"
+            mdbWavesEffect>
+            <i class="fas fa-location-arrow"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+
+  <ngx-qrcode id="qrcode" [ngStyle]="{'display': 'none'}"  [elementType]="elementType"  [value]="qrValue"
+  errorCorrectionLevel="L" *ngIf='qrValue'></ngx-qrcode>
+

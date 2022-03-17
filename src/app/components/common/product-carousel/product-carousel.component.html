@@ -1,0 +1,20 @@
+<div class="section-card home-product ">
+    <!-- <div class="card "> -->
+        <!-- <div class="card-header ">
+            <h4 class="card-title underline "><a>{{ heading }}</a></h4>
+            <button class="btn see-all " [routerLink]="[ '/product/all/'+heading] ">See All</button>
+        </div> -->
+        <!-- <div class="card-body "> -->
+            <owl-carousel-o *ngIf="products?.length>0" [options]="productOptions ">
+                <ng-template carouselSlide *ngFor="let product of products ">
+                    <app-product-card [product]="product "></app-product-card>
+                </ng-template>
+            </owl-carousel-o>
+            <owl-carousel-o *ngIf="products?.length<=0 && !productResponse" [options]="productOptions ">
+                <ng-template carouselSlide *ngFor="let product of skeletonProducts">
+                    <app-product-card-skeleton></app-product-card-skeleton>
+                </ng-template>
+            </owl-carousel-o>
+        </div>
+    <!-- </div>
+</div> -->

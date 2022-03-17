@@ -1,0 +1,26 @@
+<div class="categoryHeader">
+    <mdb-card>
+        <mdb-card-body>
+
+            <owl-carousel-o *ngIf="rootCategory?.length>0" [options]="customOptions">
+                <ng-container *ngFor="let category of rootCategory">
+                    <ng-template carouselSlide [id]="category.img">
+                        <a [routerLink]="['/'+category.urlKey+'/c/'+category._id]" >
+                            <img src="{{ category.id | image:'cat' }}/{{ category.images[0]}}" onerror="this.src='../../../assets/image/no-category.png';" [alt]="category?.name" [title]="category._name" *ngIf='category.images?.length>0'>
+                            <p>{{category.name}}</p>
+                        </a>
+                    </ng-template>
+                </ng-container>
+            </owl-carousel-o>
+            <owl-carousel-o *ngIf="rootCategory?.length<=0" [options]="customOptions">
+                <ng-container *ngFor="let category of skeletonCategory">
+                    <ng-template carouselSlide [id]="category.img">
+                        <app-category-skeleton></app-category-skeleton>
+                    </ng-template>
+                </ng-container>
+            </owl-carousel-o>
+            </mdb-card-body>
+
+    </mdb-card>
+
+</div>

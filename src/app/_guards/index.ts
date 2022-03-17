@@ -1,0 +1,1 @@
+export * from 'src/app/_guards/auth.guard';

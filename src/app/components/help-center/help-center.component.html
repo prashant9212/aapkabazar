@@ -1,0 +1,143 @@
+
+<main class="main">
+  <div class="container UserprofileBox margin-top user-help">
+    <div class="row">
+      <div class="col-lg-3 side-menu">
+        <app-profile-sidebar></app-profile-sidebar>
+      </div>
+      <div class="col-lg-9">
+        <div class="card">
+          <div class="helpMainBox">
+            <ul>
+              <li [routerLink]="['/order']" [queryParams]="{filterBy: 'delivered'}" ><i class="fa fa-cube" aria-hidden="true"></i> Help with an order </li>
+              <li (click)="otherIssueModal.show()"><i class="fa fa-cube" aria-hidden="true"></i> Other help</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div mdbModal #otherIssueModal="mdbModal" style="overflow-y:auto;" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="myBasicModalLabel" aria-hidden="true" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-content-text">
+      <!-- <div class="modal-header">
+
+      </div> -->
+      <div class="modal-body help-query">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" (click)='otherIssueModal.hide()'>&times;</span>
+        </button>
+        <div class="row px-3 py-2">
+          <div class="col-md-12">
+            <form #complaint="ngForm" [formGroup]='otherIssueForm' (ngSubmit)='raiseOtherIssue()'>
+              <h5 class="my-2 text-center ml-1">Please enter your query here</h5>
+              <p class="ml-1 mt-4 mb-0 black-text">Subject<sup class="text-danger">*</sup></p>
+              <input type="subject" class="form-control" id="subject" formControlName='subject'>
+              <small class='text-danger'
+                *ngIf='otherIssueForm.get("subject").touched && otherIssueForm.get("subject").pristine'>Complain subject
+                is required</small>
+
+              <p class="ml-1 mb-0 mt-4 black-text required">Your Email (We will reply to you on this
+                email)<sup class="text-danger">*</sup></p>
+              <input type="email" class="form-control" id="email" formControlName='email'>
+              <small class='text-danger'
+                *ngIf='otherIssueForm.get("email").touched && otherIssueForm.get("email").pristine'>Email is
+                required</small>
+              <small class='text-danger'
+                *ngIf='otherIssueForm.get("email").dirty && otherIssueForm.get("email").invalid'>Valid email is
+                required</small>
+
+              <p class="ml-1 mb-0 mt-4 black-text">Mobile No.<sup class="text-danger">*</sup></p>
+              <input type="number" class="form-control" id="mobile" formControlName='mobile'>
+              <small class='text-danger'
+                *ngIf='otherIssueForm.get("mobile").touched && otherIssueForm.get("mobile").pristine'>Mobile Number is
+                required</small>
+              <small class='text-danger'
+                *ngIf='otherIssueForm.get("mobile").dirty && otherIssueForm.get("mobile").invalid'>A valid Mobile number
+                is required</small>
+
+
+              <p class="ml-1 mt-4 mb-0 black-text">Message (Tell us about the issue)<sup class="text-danger">*</sup></p>
+              <div class="input-group">
+                <div class="field span3">
+                  <textarea class="form-control" wrap='off' rows="" cols="200" formControlName='message'></textarea>
+                  <small class='text-danger'
+                    *ngIf='otherIssueForm.get("message").touched && otherIssueForm.get("message").pristine'>Message is
+                    required</small>
+
+                </div>
+              </div>
+              <button mdbBtn type="submit" (click)='otherIssueModal.hide()' *ngIf='!isShowSpinner' class="mt-4 primary-btn bg-blue mx-auto d-block"
+                mdbWavesEffect [disabled]='!otherIssueForm.valid'>Submit</button>
+                <div class="text-center" *ngIf='isShowSpinner'>
+                  <div class="spinner-border text-primary"></div>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div mdbModal #basicModal="mdbModal" style="overflow-y:auto;" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content modal-content-text">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" (click)="hideOtherIssueModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row px-3 py-2">
+          <div class="col-md-12">
+            <form [formGroup]="complaintFormGroup" (ngSubmit)="report()" #complaint="ngForm" novalidate>
+              <h5 class="my-2 text-center ml-1">Please enter your query here</h5>
+              <p class="ml-1 mt-4 mb-0 black-text">Subject<sup class="text-danger">*</sup></p>
+              <input type="subject" [ngClass]="{'has-error-border':formErrors.subject}" class="form-control"
+                id="subject" formControlName="subject" [(ngModel)]="model.subject"
+                (blur)="logValidationErrors(complaintFormGroup)">
+              <p class="text-danger" *ngIf="formErrors.subject">
+                {{formErrors.subject}}
+              </p>
+              <p class="ml-1 mb-0 mt-4 black-text required">Your Email (We will reply to you on this
+                email)<sup class="text-danger">*</sup></p>
+              <input type="email" [ngClass]="{'has-error-border':formErrors.email}" formControlName="email"
+                class="form-control" id="email" [(ngModel)]="model.email"
+                (blur)="logValidationErrors(complaintFormGroup)">
+
+              <p class="text-danger" *ngIf="formErrors.email">
+                {{formErrors?.email}}
+              </p>
+
+              <p class="ml-1 mb-0 mt-4 black-text">Mobile No.<sup class="text-danger">*</sup></p>
+              <input type="text" [ngClass]="{'has-error-border':formErrors.mobile}" formControlName="mobile"
+                class="form-control" id="mobile" [(ngModel)]="model.phoneNo" maxlength="10"
+                (blur)="logValidationErrors(complaintFormGroup)">
+              <p class="text-danger" *ngIf="formErrors.mobile">
+                {{formErrors?.mobile}}
+              </p>
+
+              <p class="ml-1 mt-4 mb-0 black-text">Message (Tell us about the issue)<sup class="text-danger">*</sup></p>
+              <div class="input-group">
+                <div class="field span3">
+                  <textarea class="form-control" [ngClass]="{'has-error-border':formErrors.message}"
+                    formControlName="message" wrap='off' rows="6" cols="200" [(ngModel)]="model.description"
+                    (blur)="logValidationErrors(complaintFormGroup)"></textarea>
+                </div>
+                <p class="text-danger" *ngIf="formErrors.message">
+                  {{formErrors.message}}
+                </p>
+              </div>
+              <button mdbBtn type="submit" class="mt-4 primary-btn mx-auto d-block" mdbWavesEffect>Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

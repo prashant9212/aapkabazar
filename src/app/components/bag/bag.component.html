@@ -1,0 +1,85 @@
+<main class="main" *ngIf="bagList.length>0">
+    <div class="container bag">
+        <div class="row" *ngIf="bagList.length!=0">
+            <div class="col-md-8">
+                <div class="card mb-3 CartLeftBox">
+                    <div>
+                        <div class="card-header subscription-header bag-header">
+                            <h4 class="font-weight-normal">My Cart</h4>
+                            <h4 class="font-weight-normal catItemCount">Total Item ({{ bagList?.length }})</h4>
+                        </div>
+                        <div class="card-body p-0" *ngFor="let product of bagList">
+                            <div class="row px-4 align-items-center py-2">
+                                <div class="col-sm-2 col-4 CartImgBox">
+                                    <img class="mx-auto pointer py-2 bag-img" src="{{ product?.id | image}}/{{ product?.images[0]|imageSize:200}}">
+                                </div>
+                                <div class="col-sm-10 col-8 CartProductName">
+                                    <div class="cart-list">
+                                      <div class="row">
+                                        <div class="col-md-9 bagp0">
+                                          <p class="h5 mt-2 CartItemName" [routerLink]="['/'+product?.name+'/product',product._id]">{{product.name | titlecase }}</p>
+                                          <div class="CartPriceDis">
+                                            <h4 class="pointer">
+                                              <span *ngIf="product?.itemQuantity > product.storeMinQuantity" > ₹{{product.sellPrice}}</span>
+                                              <span *ngIf="product?.itemQuantity <= product.storeMinQuantity"> ₹{{product.minSellPrice}}</span>
+                                              <span class="grey-text" *ngIf="product.sellPrice!=product.price"><del>₹{{product.price}}</del></span></h4>
+                                            <a class="offers" *ngIf="product.sellPrice!=product.price">{{((product.price-product.minSellPrice)/(product.price)*100).toFixed(1) | roundoff}}% OFF</a>
+                                          </div>
+                                          <div *ngIf="product.sellPrice > product.minSellPrice" class="bagOfferMain">
+                                            <div class="bagOffer"><span>Special</span> Offer</div>
+                                            <div class="bagvalue">₹{{product.minSellPrice}} Offer Price for {{product.storeMinQuantity}} Quantity.</div>
+                                          </div>
+                                         
+                                           <!-- <button type="button" class=" bag-btn-outline">{{product?.recommendedAttribute}}</button> -->
+                                        </div>
+                                        <div class="col-md-3 bagpMob0">
+                                            <ng-template #notStock>
+                                              <h5 class="mt-1 grey-text">Out of Stock</h5>
+                                          </ng-template>
+                                          <div class="mt-0 cartQtyBox">
+                                              <button type="button" *ngIf="product?.itemQuantity > 1" mdbWavesEffect class="pt-1 z-depth-1 waves-effect btn-outline-light" (click)=decrementQuantity(product)>
+                                                <i class="fa fa-minus " aria-hidden="true"></i>
+                                              </button>
+                                              <button type="button" *ngIf="product?.itemQuantity <=1" mdbWavesEffect class="pt-1 z-depth-1 waves-effect btn-outline-light ban-btn">
+                                                <i class="fa fa-minus" aria-hidden="true"></i>
+                                              </button>
+                                              <button type="button" class=" waves-effect   qty-btn"><span class="">{{ product?.itemQuantity }}</span></button>
+                                              <button type="button" mdbWavesEffect class="pt-1 z-depth-1  waves-effect btn-outline-light" (click)=incrementQuantity(product)><i class="fa fa-plus"></i></button>
+                                          </div>
+                                          <div class="CartRemoveBtn">
+                                            <button type="button" *ngIf="product?.itemQuantity <=1" mdbWavesEffect class="pt-1 z-depth-1 waves-effect btn-outline-light remove-btn" (click)=removeProduct(product)>
+                                            <i class="fa fa-trash-o"></i> Remove
+                                            </button>
+                                          </div>
+                                        </div>
+                                        
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr *ngIf="bagList?.length>1" class="grey-hr accent-2 mb-0 mt-0 d-block mx-auto bagListhr" style="width: 100%;">
+                        </div>
+                    </div>
+                    <!-- <div class="card-footer text-right">
+
+                    </div> -->
+                </div>
+            </div>
+            <div class="col-md-4 mb-3 CartRightPadding" *ngIf="bagList.length!=0">
+                <app-price-detail-table [checkoutPage]="checkoutPage"></app-price-detail-table>
+            </div>
+        </div>
+    </div>
+</main>
+<div class="noProduct" *ngIf="bagList.length==0">
+    <div class="CartEmptyBox container">
+    <h2>My Cart</h2>
+     <img  src="assets/image/noProductFound.png" class="img-cart" alt="Sorry! your cart is empty?">
+     <br>
+     <h6 class="CartEmptytext">Sorry! your cart is empty?</h6>
+     <br>
+     <a [routerLink]="['/']" class="CartEmptyBtn">Shop Now</a>
+     <br>
+    </div>
+ </div>
+

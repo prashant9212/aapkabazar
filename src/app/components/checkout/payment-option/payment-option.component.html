@@ -1,0 +1,110 @@
+<main class="main">
+    <div class="container paymentBox">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="card z-depth-1 mb-3">
+                    <div class="card-body wallet-body">
+                        <div class="payment-header" *ngIf="isWallet">
+                            <h5>Add Amount</h5>
+                            <p> <i class="mr-1 fa fa-inr"></i>{{ addAmount }}</p>
+                        </div>
+                        <div class="payment-header" *ngIf="isOrder">
+                            <h5>Total Paid Amount</h5>
+                            <p> <i class="mr-1 fa fa-inr"></i>{{ payableAmount }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="z-depth-1 pt-2 pb-0 mb-5 bg-white z-depth-1">
+                    <form [formGroup]="paymentModeForm">
+                        <!-- <div class="card z-depth-0 " *ngIf="isOrder">
+                            <div class="card-body pt-2 pb-0">
+                                <div class="option-box">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" value="wallet" id="wallet" name="mode" [checked]="isWalletPayment && paymentModeForm.value.mode !='cod'" [disabled]="balance<=0 || paymentModeForm.value.mode ==='cod'" (change)="checkMBWallet()">
+                                        <label class="custom-control-label custom-control-my-label " for="wallet">Wallet</label>
+                                        <label class="wallet-balance">Wallet Balance: <i class="mr-1 fa fa-inr"></i>{{ balance }} </label>
+                                    </div>
+                                    <button class="btn btn-custom-primary" *ngIf="!isWallet && balance>=payableAmount && isWalletPayment" (click)="payNow('mbwallet')">PAY <i class="mr-1 fa fa-inr"></i>{{ addAmount }}</button>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <hr class="grey-hr accent-2 mb-0 mt-0 d-inline-block mx-auto" style="width: 100%;"> -->
+                        <!-- <div class="card z-depth-0">
+                            <div class="card-body pt-2 pb-0">
+                                <div class="option-box">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" value="paytm" id="paytm" name="mode" checked formControlName="mode">
+                                        <label class="custom-control-label custom-control-my-label" for="paytm">PayTm</label>
+                                    </div>
+                                    <button class="btn btn-custom-primary" *ngIf="paymentModeForm.value.mode==='paytm'" (click)="payNow('paytm')">PAY <i class="mr-1 fa fa-inr"></i>{{ addAmount }}</button>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <hr class="grey-hr accent-2 mb-0 mt-0 d-inline-block mx-auto" style="width: 100%;"> -->
+                        <div class="card z-depth-0">
+                            <div class="card-body py-2">
+                                <div class="option-box">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" value="otherWallet" id="otherWallet" name="mode" formControlName="mode">
+                                        <label class="custom-control-label custom-control-my-label " for="otherWallet">Wallet Payment</label>
+                                    </div>
+                                    <button class="btn btn-custom-primary" *ngIf="paymentModeForm.value.mode==='otherWallet'" (click)="payNow('otherWallet')">PAY <i class="mr-1 fa fa-inr"></i>{{ addAmount }}</button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="grey-hr accent-2 mb-0 mt-0 d-inline-block mx-auto" style="width: 100%;">
+                        <div class="card z-depth-0">
+                            <div class="card-body pt-2 pb-0">
+                                <div class="option-box">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" value="card" id="card" name="mode" formControlName="mode">
+                                        <label class="custom-control-label custom-control-my-label " for="card">ATM/Debit/Credit Card</label>
+                                    </div>
+                                    <button class="btn btn-custom-primary" *ngIf="paymentModeForm.value.mode==='card'" (click)="payNow('card')">PAY <i class="mr-1 fa fa-inr"></i>{{ addAmount }}</button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="grey-hr accent-2 mb-0 mt-0 d-inline-block mx-auto" style="width: 100%;">
+                        <div class="card z-depth-0 ">
+                            <div class="card-body pt-2 pb-0">
+                                <div class="option-box">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" value="netbanking" id="netbanking" name="mode" formControlName="mode">
+                                        <label class="custom-control-label custom-control-my-label " for="netbanking">Netbanking Payment</label>
+                                    </div>
+                                    <button class="btn btn-custom-primary" *ngIf="paymentModeForm.value.mode==='netbanking'" (click)="payNow('netbanking')">PAY <i class="mr-1 fa fa-inr"></i>{{ addAmount }}</button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="grey-hr accent-2 mb-0 mt-0 d-inline-block mx-auto" style="width: 100%;">
+                        <div class="card z-depth-0">
+                            <div class="card-body py-2">
+                                <div class="option-box">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" value="upi" id="bhim" name="mode" formControlName="mode">
+                                        <label class="custom-control-label custom-control-my-label " for="bhim">BHIM/UPI Payment</label>
+                                    </div>
+                                    <button class="btn btn-custom-primary" *ngIf="paymentModeForm.value.mode==='upi'" (click)="payNow('upi')">PAY <i class="mr-1 fa fa-inr"></i>{{ addAmount }}</button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="grey-hr accent-2 mb-0 mt-0 d-inline-block mx-auto" style="width: 100%;">
+                        <div class="card z-depth-0" *ngIf="isOrder && isCod">
+                            <div class="card-body py-2">
+                                <div class="option-box">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" value="cod" id="cod" name="mode" formControlName="mode" (change)='changeMbWalletPayment()'>
+                                        <label class="custom-control-label custom-control-my-label " for="cod">COD Payment</label>
+                                    </div>
+                                    <button class="btn btn-custom-primary" *ngIf="paymentModeForm.value.mode==='cod'" (click)="payNow('cod')">PAY <i class="mr-1 fa fa-inr"></i>{{ addAmount }}</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <hr class="grey-hr accent-2 mb-0 mt-0 d-inline-block mx-auto" style="width: 100%;" *ngIf="isOrder"> -->
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

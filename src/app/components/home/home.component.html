@@ -1,0 +1,817 @@
+<!-- <app-category-header></app-category-header> -->
+<div class="mainindex">
+  <div class="text-center body-img" *ngIf="!bannerResponse">
+    <img src="assets/image/gif.gif">
+  </div>
+  <div *ngIf="bannerResponse">
+
+    <section class="top-banner">
+    <!---Srart--->
+    <section class="MainBanner1">
+      <owl-carousel-o [options]="MainBanner" class="web">  
+        <ng-container *ngFor="let slide of MainBanner1Web">
+          <ng-template carouselSlide [id]="slide.id">
+            <a [href]="slide.link">
+              <img [src]="slide.img" alt="">
+            </a>
+          </ng-template>
+        </ng-container>     
+      </owl-carousel-o>
+      <owl-carousel-o [options]="MainBanner" class="app">  
+        <ng-container *ngFor="let slide of MainBanner1App">
+          <ng-template carouselSlide [id]="slide.id">
+            <a [href]="slide.link">
+              <img [src]="slide.img" alt="">
+            </a>
+          </ng-template>
+        </ng-container>      
+      </owl-carousel-o>
+    </section>
+
+    <section class="MainBanner2">
+      <owl-carousel-o [options]="MainBanner" class="web">  
+        <ng-container *ngFor="let slide of MainBanner2Web">
+          <ng-template carouselSlide [id]="slide.id">
+            <a [href]="slide.link">
+              <img [src]="slide.img" alt="">
+            </a>
+          </ng-template>
+        </ng-container>        
+      </owl-carousel-o>
+      <owl-carousel-o [options]="MainBanner" class="app">  
+        <ng-container *ngFor="let slide of MainBanner2App">
+          <ng-template carouselSlide [id]="slide.id">
+            <a [href]="slide.link">
+              <img [src]="slide.img" alt="">
+            </a>
+          </ng-template>
+        </ng-container>           
+      </owl-carousel-o>
+    </section>
+
+    <section class="MainBanner3">
+      <owl-carousel-o [options]="MainBanner" class="web">  
+        <ng-container *ngFor="let slide of MainBanner3Web">
+          <ng-template carouselSlide [id]="slide.id">
+            <a [href]="slide.link">
+              <img [src]="slide.img" alt="">
+            </a>
+          </ng-template>
+        </ng-container>  
+      </owl-carousel-o>
+      <owl-carousel-o [options]="MainBanner" class="app">  
+        <ng-container *ngFor="let slide of MainBanner3App">
+          <ng-template carouselSlide [id]="slide.id">
+            <a [href]="slide.link">
+              <img [src]="slide.img" alt="">
+            </a>
+          </ng-template>
+        </ng-container>     
+      </owl-carousel-o>
+    </section>
+    <!---End--->
+  </section>
+
+  
+  <section class="category-section first-section">
+  <div class="container head-2 CatHomeBox">
+   <div class="bg-img"><img src="assets/image/left-head.png">
+    <h2 class="head-2">Shop By Category</h2><img src="assets/image/right-head.png"></div>
+    <div class="row mainSectionList">
+      <div class="col-md--12"></div>
+      <ng-container *ngIf="rootCategories?.length>0">
+        <div class="categories-top" *ngFor="let category of rootCategories">
+            <a [routerLink]="['/'+category.urlKey+'/c/'+category._id]">
+              <img src="{{ category.id | image:'cat' }}/{{ category.images[0]}}" onerror="this.src='../../../assets/image/no-category.png';" [alt]="category?.name" [title]="category?.name" *ngIf='category.images?.length>0'>
+                <h4 class="HomeCatBages" *ngIf="category.offertext">{{category.offertext}}</h4>
+                <h6>{{category.name | titlecase}}</h6>
+            </a>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <section class="SliderOwl1">
+    <owl-carousel-o [options]="customOptions">  
+      <ng-container *ngFor="let slide of slides">
+        <ng-template carouselSlide [id]="slide.id">
+          <a [href]="slide.link">
+            <img [src]="slide.img" alt="">
+          </a>
+        </ng-template>
+      </ng-container>      
+    </owl-carousel-o>
+  </section>
+  
+  <!-- <app-banner *ngIf="banners[3]" [banners]="banners[3]"></app-banner>
+  <app-banner-skeleton *ngIf="!bannerResponse"></app-banner-skeleton> -->
+  
+    <div class="Sub-CatBanner">
+      <!-- <div class="BannerWebHome">
+        <a href="undefined/p/61eaecae2da73066de6b32e6"><img src="../../../assets/image/Offers/nutella.jpg"></a>
+      </div> -->
+      <div class="BannerMobHome">
+        <a href="undefined/p/61eaecb12da73066de6b46f9"><img src="../../../assets/image/Offers/akhrotgiri.jpg" alt="Akhrot"></a>
+      </div>
+    </div>
+  </section>
+  
+  <section class="OfferHomeBox4">
+    <div class="container-fluid">
+        <ul class="OfferBox4">
+          <li>
+            <a href="undefined/p/61eaecae2da73066de6b3273"><img src="../../../assets/image/Offers/kaju1kg.jpg" alt="Kaju 1 kg"></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecb12da73066de6b46ec"><img src="../../../assets/image/Offers/anjeer1kg.jpg" alt="anjeer 1 kg"></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecb12da73066de6b46f3"><img src="../../../assets/image/Offers/category1.jpg" alt="Kismis 1 kg"></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecb12da73066de6b4204"><img src="../../../assets/image/Offers/category2.jpg" alt=" Pista 1 kg"></a>
+          </li>       
+        </ul>
+    </div>
+  </section>
+  
+  
+  <section class="offers">
+  <div class="bg-img"><img src="assets/image/left-head.png" alt="">
+  <h2 class="head-2">Crazy Deals</h2><img src="assets/image/right-head.png" alt=""></div>
+  <!-- <app-banner *ngIf="banners[4]" [banners]="banners[4]"></app-banner> -->
+    <div class="Sub-CatBanner">
+      <div class="BannerWebHome">
+        <a href="undefined/p/61ed212c742f0368e149aa8c"><img src="../../../assets/image/Offers/tea1kg.jpg" alt=""></a>
+      </div>
+      <div class="BannerMobHome">
+        <a href="undefined/p/61eaecb12da73066de6b461d"><img src="../../../assets/image/Offers/gauridubar10kg.jpg" alt=""></a>
+      </div>
+    </div>
+    <div class="OfferHomeBox4">
+      <div class="container-fluid">
+          <ul class="OfferBox4">
+            <li>
+              <a href="undefined/p/61ed212c742f0368e149aaaf"><img src="../../../assets/image/Offers/mbanner1.jpg" alt=""></a>
+            </li>
+            <li>
+              <a href="undefined/p/61eaecae2da73066de6b31ad"><img src="../../../assets/image/Offers/mbanner2.jpg" alt=""></a>
+            </li>
+            <li>
+              <a href="undefined/p/61ed212c742f0368e149aa74"><img src="../../../assets/image/Offers/mbanner3.jpg" alt=""></a>
+            </li>
+            <li>
+              <a href="undefined/p/61ed212c742f0368e149a9eb"><img src="../../../assets/image/Offers/mbanner4.jpg" alt=""></a>
+            </li>
+          </ul>
+      </div>
+    </div>
+  
+  <!-----
+  <app-banner *ngIf="banners[4]" [banners]="banners[4]"></app-banner>
+  <app-banner-skeleton *ngIf="!bannerResponse"></app-banner-skeleton>
+  
+  <div class="banner-no-slide" *ngIf="banners[5].banners">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6 pl-2" *ngFor="let banner of banners[5].banners">
+              <a [routerLink]="[banner.searchKeywordWeb]">
+                <img src="{{ banners[5]?.id | image:'banners'}}/{{ banner.image[0] ? banner?.image[0] : banner?.image[1] }}">
+              </a>
+            </div>
+        </div>
+    </div>
+  </div>------->
+  </section>
+  
+  <!-- <section class="deals-of-day">
+    <div class="container">
+      <div class="bg-img"><img src="assets/image/left-head.png">
+      <h2 class="head-2 offer-day">Limited Time Offer</h2><img src="assets/image/right-head.png"></div>
+      <div class="dealsHomeProduct">
+        <app-product-carousel [products]="mostViewProduct" [productResponse]="productResponse" [heading]="''"></app-product-carousel>
+      </div>
+      </div>
+  </section> -->
+  
+  
+  <section class="offers hot-deal">
+  <div class="bg-img"><img src="assets/image/left-head.png" alt="">
+  <h2 class="head-2">Hot Deal</h2><img src="assets/image/right-head.png" alt=""></div>
+  <!-- <app-banner *ngIf="banners[6]" [banners]="banners[6]"></app-banner>
+  <app-banner-skeleton *ngIf="!bannerResponse"></app-banner-skeleton> -->
+    <div class="Sub-CatBanner">
+      <div class="BannerWebHome">
+        <a href="undefined/p/61eaecb12da73066de6b4614"><img src="../../../assets/image/Offers/saffolaGold5L.jpg" alt=""></a>
+      </div>
+      <div class="BannerMobHome">
+        <a href="undefined/p/61eaecb12da73066de6b4614"><img src="../../../assets/image/Offers/saffolaGold5LM.jpg" alt=""></a>
+      </div>
+    </div>
+    <div class="OfferHomeBox4 bg-white">
+      <div class="container-fluid">
+          <ul class="OfferBox4">
+            <li>
+              <a href="undefined/p/61eaecae2da73066de6b315b"><img src="../../../assets/image/Offers/rofza.jpg" alt=""></a>
+            </li>
+            <li>
+              <a href="undefined/p/61eaecb02da73066de6b3a3a"><img src="../../../assets/image/Offers/FoodNew2.jpg" alt=""></a>
+            </li>
+            <li>
+              <a href="undefined/p/61eaecaf2da73066de6b35ef"><img src="../../../assets/image/Offers/FoodNew3.jpg" alt=""></a>
+            </li>
+            <li>
+              <a href="food-grain--spices/spicesmasala/c/61b18e41c5aed278ca11c069/61b19378c5aed278ca11c0f3"><img src="../../../assets/image/Offers/FoodNew4.jpg" alt=""></a>
+            </li>
+          </ul>
+      </div>
+    </div>
+  
+  <!-----
+  <div class="banner-no-slide" *ngIf="banners[7].banners">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-4 p-2" *ngFor="let banner of banners[7].banners">
+              <a [routerLink]="[banner.searchKeywordWeb]">
+                <img src="{{ banners[7]?.id | image:'banners'}}/{{ banner.image[0] ? banner?.image[0] : banner?.image[1] }}">
+              </a>
+            </div>
+  
+        </div>
+    </div>
+  </div>
+  ----->
+  
+  </section>
+  
+  <!--
+  <section class="category-section first-category-bg sub-CatSection">
+  <div class="container">
+  <div class="bg-img"><img src="assets/image/left-head.png" alt="">
+    <h2 class="head-2">Food Grain & Spices</h2><img src="assets/image/right-head.png" alt="">
+  </div>
+  <div class="row mainSectionList">
+    <ng-container *ngIf="foodGrains?.length>0">
+      <div class="col-md-2 col-4 p-2" *ngFor="let foodGrainsa of foodGrains | slice:0:5">
+        <div class="sub-category-img">
+          <a [routerLink]="['foodgrainspices/'+foodGrainsa.urlKey+'/c/61b18e41c5aed278ca11c069/'+foodGrainsa._id]">
+            <img src="{{ foodGrainsa.id | image:'cat' }}/{{ foodGrainsa.images[0]}}" onerror="this.src='../../../assets/image/no-category.png';" [alt]="foodGrainsa?.name" [title]="foodGrainsa?.name" *ngIf='foodGrainsa.images?.length>0'>
+            <h5 class="HomeCatBages" *ngIf="foodGrainsa.offertext">{{foodGrainsa.offertext}}</h5>
+            <p>{{foodGrainsa.name | titlecase}}</p>
+          </a>
+        </div>
+    </div>
+    </ng-container>
+    <div class="col-md-2 col-4 p-2" *ngIf="foodGrains?.length>5">
+        <div class="sub-category-img">
+            <a [routerLink]="['foodgrainspices/c/61b18e41c5aed278ca11c069']">
+                <h4>all Category</h4>
+            </a>
+        </div>
+    </div>
+  </div>
+  <div class="product-slide HomeProSlider">
+  <app-product-carousel [products]="foodGrainproducts"  [heading]="''"></app-product-carousel>
+  </div>
+  </div>
+  <div class="Sub-CatBanner">
+    <div class="BannerWebHome">
+      <a [routerLink]="['foodgrainspices/c/61b18e41c5aed278ca11c069']">
+      <img src="{{ foodGraincategoryDetails.category.id | image:'cat' }}/{{ foodGraincategoryDetails.category.images[1]}}" onerror="this.src='../../../assets/image/no-category.png';" [alt]="foodGraincategoryDetails.category.category?.name" [title]="foodGraincategoryDetails.category.category?.name" *ngIf='foodGraincategoryDetails.category.images[1]?.length>0'>
+      </a>
+    </div>
+    <div class="BannerMobHome">
+      <a href="undefined/p/61eaecaf2da73066de6b36ba"><img src="../../../assets/image/Offers/fortunexpertoil5L.jpg" alt="fortunexpertoil5L"></a>
+    </div>
+  </div>
+  <div class="OfferHomeBox4">
+    <div class="container-fluid">
+        <ul class="OfferBox4">
+          <li>
+            <a href="undefined/p/61eaecb12da73066de6b45e9"><img src="../../../assets/image/Offers/jeera200.jpg" alt="jeera200"></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecb12da73066de6b4619"><img src="../../../assets/image/Offers/dhaniya500.jpg" alt="dhaniya500"></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecb12da73066de6b4616"><img src="../../../assets/image/Offers/lalmirch200.jpg" alt="lalmirch200"></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecb12da73066de6b4625"><img src="../../../assets/image/Offers/haldi500.jpg" alt="haldi500"></a>
+          </li>
+  
+        </ul>
+    </div>
+  </div>
+  
+  
+  </section>
+  
+  
+  
+  
+  <section class="category-section second-bg-category sub-CatSection">
+  <div class="container">
+  <div class="bg-img"><img src="assets/image/left-head.png" alt="">
+    <h2 class="head-2">Beverages</h2><img src="assets/image/right-head.png" alt="">
+  </div>
+  <div class="row mainSectionList">
+    <ng-container *ngIf="Beverages?.length>0">
+      <div class="col-md-2 col-4 p-2" *ngFor="let Beveragess of Beverages | slice:0:5">
+        <div class="sub-category-img">
+          <a [routerLink]="['/beverages/'+Beveragess.urlKey+'/c/61b19199c5aed278ca11c0a8/'+Beveragess._id]">
+            <img src="{{ Beveragess.id | image:'cat' }}/{{ Beveragess.images[0]}}" [alt]="Beveragess?.name" [title]="Beveragess?.name" *ngIf='Beveragess.images?.length>0'>
+            <img src="../../../assets/image/no-category.png" *ngIf="Beveragess.images[0] == null" style="height: 139px !important;">
+            <h5 class="HomeCatBages" *ngIf="Beveragess.offertext">{{Beveragess.offertext}}</h5>
+            <p>{{Beveragess.name | titlecase}}</p>
+          </a>
+        </div>
+    </div>
+    </ng-container>
+    <div class="col-md-2 col-4 p-2" *ngIf="Beverages?.length>5">
+        <div class="sub-category-img">
+            <a [routerLink]="['beverages/c/61b19199c5aed278ca11c0a8']">
+                <h4>all Category</h4>
+            </a>
+        </div>
+    </div>
+  </div>
+  <div class="product-slide">
+  <app-product-carousel [products]="Beveragesproducts"  [heading]="''"></app-product-carousel>
+  </div>
+  </div>
+  
+  <div class="Sub-CatBanner">
+    <div class="BannerWebHome">
+      <a [routerLink]="['beverages/c/61b19199c5aed278ca11c0a8']">
+        <img src="{{ BeveragescategoryDetails.category.id | image:'cat' }}/{{ BeveragescategoryDetails.category.images[1]}}" onerror="this.src='../../../assets/image/no-category.png';" [alt]="foodGraincategoryDetails.category.category?.name" [title]="foodGraincategoryDetails.category.category?.name" *ngIf='BeveragescategoryDetails.category.images[1]?.length>0'>
+        </a>
+    </div>
+  <div class="BannerMobHome">
+    <a href="undefined/p/61eaecaf2da73066de6b384c"><img src="../../../assets/image/Offers/mediumBanner7.jpg" alt=""></a>
+  </div>
+  </div>
+  
+  <div class="OfferHomeBox4">
+    <div class="container-fluid">
+        <ul class="OfferBox4">
+          <li>
+            <a href="undefined/p/61eaecaf2da73066de6b337e"><img src="../../../assets/image/Offers/tropicana.jpg" alt="tropicana"></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecae2da73066de6b315a"><img src="../../../assets/image/Offers/redbull.jpg" alt="redbull"></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecaf2da73066de6b384b"><img src="../../../assets/image/Offers/glucond1kg.jpg" alt="glucond1kg"></a>
+          </li>
+          <li>
+            <a href="undefined/p/61ed212c742f0368e149a936"><img src="../../../assets/image/Offers/fresca.jpg" alt="fresca"></a>
+          </li>
+        </ul>
+    </div>
+  </div>
+  
+  </section>
+  
+  
+  
+  
+  <section class="category-section first-category-bg sub-CatSection">
+  <div class="container">
+  <div class="bg-img"><img src="assets/image/left-head.png" alt="">
+    <h2 class="head-2">Beauty & Hygiene</h2><img src="assets/image/right-head.png" alt="">
+  </div>
+  <div class="row mainSectionList">
+    <ng-container *ngIf="Hygiene?.length>0">
+      <div class="col-md-2 col-4 p-2" *ngFor="let Hygienes of Hygiene | slice:0:5">
+        <div class="sub-category-img">
+          <a [routerLink]="['/beautyhygiene/'+Hygienes.urlKey+'/c/61b19150c5aed278ca11c096/'+Hygienes._id]">
+            <img src="{{ Hygienes.id | image:'cat' }}/{{ Hygienes.images[0]}}" [alt]="Hygienes?.name" [title]="Hygienes?.name" *ngIf='Hygienes.images?.length>0'>
+            <img src="../../../assets/image/no-category.png" *ngIf="Hygienes.images[0] == null" style="height: 139px !important;">
+            <h5 class="HomeCatBages" *ngIf="Hygienes.offertext">{{Hygienes.offertext}}</h5>
+            <p>{{Hygienes.name | titlecase}}</p>
+          </a>
+        </div>
+    </div>
+    </ng-container>
+    <div class="col-md-2 col-4 p-2" *ngIf="Hygiene?.length>5">
+        <div class="sub-category-img">
+            <a [routerLink]="['beautyhygiene/c/61b19150c5aed278ca11c096']">
+                <h4>all Category</h4>
+            </a>
+        </div>
+    </div>
+  </div>
+  <div class="product-slide">
+  <app-product-carousel [products]="Hygieneproducts"  [heading]="''"></app-product-carousel>
+  </div>
+  </div>
+  
+  <div class="Sub-CatBanner">
+    <div class="BannerWebHome">
+      <a [routerLink]="['beautyhygiene/c/61b19150c5aed278ca11c096']">
+        <img src="{{ HygienecategoryDetails.category.id | image:'cat' }}/{{ HygienecategoryDetails.category.images[1]}}" onerror="this.src='../../../assets/image/no-category.png';" [alt]="HygienecategoryDetails.category.category?.name" [title]="HygienecategoryDetails.category.category?.name" *ngIf='HygienecategoryDetails.category.images[1]?.length>0'>
+        </a>
+    </div>
+  <div class="BannerMobHome">
+    <a href="beautyhygiene/c/61b19150c5aed278ca11c096"><img src="../../../assets/image/Offers/mediumBanner3.jpg" alt=""></a>
+  </div>
+  </div>
+  
+  
+  <div class="OfferHomeBox4">
+    <div class="container-fluid">
+        <ul class="OfferBox4">
+          <li>
+            <a href="undefined/p/61eaecb02da73066de6b3f30"><img src="../../../assets/image/Offers/Use2HandWash5L.jpg" alt="Use2 HandWash 5L"></a>
+          </li>
+          <li>
+            <a href="undefined/p/61ed212c742f0368e149aacd"><img src="../../../assets/image/Offers/bh2.jpg" alt=""></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecae2da73066de6b30d0"><img src="../../../assets/image/Offers/bh3.jpg" alt=""></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecb02da73066de6b3c38"><img src="../../../assets/image/Offers/bh4.jpg" alt=""></a>
+          </li>
+        </ul>
+    </div>
+  </div>
+  
+  </section>
+  
+  
+  
+  
+  <section class="category-section second-bg-category sub-CatSection">
+  <div class="container">
+  <div class="bg-img"><img src="assets/image/left-head.png" alt="">
+    <h2 class="head-2">Snacks & Branded Foods</h2><img src="assets/image/right-head.png" alt="">
+  </div>
+  <div class="row mainSectionList">
+    <ng-container *ngIf="Snacks?.length>0">
+      <div class="col-md-2 col-4 p-2" *ngFor="let Snackss of Snacks | slice:0:5">
+        <div class="sub-category-img">
+          <a [routerLink]="['/snacksbrandedfoods/'+Snackss.urlKey+'/c/61b19188c5aed278ca11c09f/'+Snackss._id]">
+            <img src="{{ Snackss.id | image:'cat' }}/{{ Snackss.images[0]}}" [alt]="Snackss?.name" [title]="Snackss?.name" *ngIf='Snackss.images?.length>0'>
+            <img src="../../../assets/image/no-category.png" *ngIf="Snackss.images[0] == null" style="height: 139px !important;">
+            <h5 class="HomeCatBages" *ngIf="Snackss.offertext">{{Snackss.offertext}}</h5>
+            <p>{{Snackss.name | titlecase}}</p>
+          </a>
+        </div>
+    </div>
+    </ng-container>
+    <div class="col-md-2 col-4 p-2" *ngIf="Snacks?.length>5">
+        <div class="sub-category-img">
+            <a [routerLink]="['snacksbrandedfoods/c/61b19188c5aed278ca11c09f']">
+                <h4>all Category</h4>
+            </a>
+        </div>
+    </div>
+  </div>
+  <div class="product-slide">
+  <app-product-carousel [products]="Snacksproducts"  [heading]="''"></app-product-carousel>
+  </div>
+  </div>
+  
+  <div class="Sub-CatBanner">
+    <div class="BannerWebHome">
+      <a [routerLink]="['snacksbrandedfoods/c/61b19188c5aed278ca11c09f']">
+        <img src="{{ SnackscategoryDetails.category.id | image:'cat' }}/{{ SnackscategoryDetails.category.images[1]}}" onerror="this.src='../../../assets/image/no-category.png';" [alt]="SnackscategoryDetails.category.category?.name" [title]="SnackscategoryDetails.category.category?.name" *ngIf='SnackscategoryDetails.category.images[1]?.length>0'>
+        </a>
+    </div>
+  <div class="BannerMobHome">
+    <a href="undefined/p/61fe2575e6a622b6ac99616a"><img src="../../../assets/image/Offers/mediumBanner9.jpg" alt=""></a>
+  </div>
+  </div>
+  
+  <div class="OfferHomeBox4">
+    <div class="container-fluid">
+        <ul class="OfferBox4">
+          <li>
+            <a href="undefined/p/61eaecaf2da73066de6b34ff"><img src="../../../assets/image/Offers/sc1.jpg" alt=""></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecaf2da73066de6b3364"><img src="../../../assets/image/Offers/sc2.jpg" alt=""></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecaf2da73066de6b3508"><img src="../../../assets/image/Offers/sc3.jpg" alt=""></a>
+          </li>
+          <li>
+            <a href="undefined/p/61ed212c742f0368e149a98d"><img src="../../../assets/image/Offers/sc4.jpg" alt=""></a>
+          </li>
+        </ul>
+    </div>
+  </div>
+  
+  </section>
+  --->
+  
+  
+  
+  
+  <!--
+  <section class="category-section first-category-bg sub-CatSection">
+  <div class="container">
+  <div class="bg-img"><img src="assets/image/left-head.png">
+    <h2 class="head-2">Gourmet & Exotic Foods</h2><img src="assets/image/right-head.png">
+  </div>
+  <div class="row mainSectionList">
+    <ng-container *ngIf="Exotics?.length>0">
+      <div class="col-md-2 col-4 p-2" *ngFor="let Exotic of Exotics | slice:0:5">
+        <div class="sub-category-img">
+          <a [routerLink]="['/gourmetexoticfoods/'+Exotic.urlKey+'/c/61b191bac5aed278ca11c0b1/'+Exotic._id]">
+            <img src="{{ Exotic.id | image:'cat' }}/{{ Exotic.images[0]}}" [alt]="Exotic?.name" [title]="Exotic._name" *ngIf='Exotic.images?.length>0'>
+            <img src="../../../assets/image/no-category.png" *ngIf="Exotic.images[0] == null" style="height: 139px !important;">
+            <h5 class="HomeCatBages" *ngIf="Exotic.offertext">{{Exotic.offertext}}</h5>
+            <p>{{Exotic.name | titlecase}}</p>
+          </a>
+        </div>
+    </div>
+    </ng-container>
+    <div class="col-md-2 col-4 p-2" *ngIf="Exotics?.length>5">
+        <div class="sub-category-img">
+            <a [routerLink]="['Exoticbrandedfoods/c/61b191bac5aed278ca11c0b1']">
+                <h4>all Category</h4>
+            </a>
+        </div>
+    </div>
+  </div>
+  <div class="product-slide">
+  <app-product-carousel [products]="Exoticproducts"  [heading]="''"></app-product-carousel>
+  </div>
+  </div>
+  <div class="Sub-CatBanner">
+  <a [routerLink]="['Exoticbrandedfoods/c/61b191bac5aed278ca11c0b1']">
+  <img src="{{ ExoticcategoryDetails.category.id | image:'cat' }}/{{ ExoticcategoryDetails.category.images[1]}}" onerror="this.src='../../../assets/image/no-category.png';" [alt]="ExoticcategoryDetails.category.category?.name" [title]="ExoticcategoryDetails.category._name" *ngIf='ExoticcategoryDetails.category.images[1]?.length>0'>
+  </a>
+  </div>
+  </section> -->
+  
+  
+  <!--
+  <section class="category-section second-bg-category sub-CatSection">
+  <div class="container">
+  <div class="bg-img"><img src="assets/image/left-head.png">
+    <h2 class="head-2">Baby Care</h2><img src="assets/image/right-head.png" alt="">
+  </div>
+  <div class="row mainSectionList">
+    <ng-container *ngIf="Babycares?.length>0">
+      <div class="col-md-2 col-4 p-2" *ngFor="let Babycare of Babycares | slice:0:5">
+        <div class="sub-category-img">
+          <a [routerLink]="['/babycare/'+Babycare.urlKey+'/c/61b191d3c5aed278ca11c0ba/'+Babycare._id]">
+            <img src="{{ Babycare.id | image:'cat' }}/{{ Babycare.images[0]}}" [alt]="Babycare?.name" [title]="Babycare?.name" *ngIf='Babycare.images?.length>0'>
+            <img src="../../../assets/image/no-category.png" *ngIf="Babycare.images[0] == null" style="height: 139px !important;">
+            <h5 class="HomeCatBages" *ngIf="Babycare.offertext">{{Babycare.offertext}}</h5>
+            <p>{{Babycare.name | titlecase}}</p>
+          </a>
+        </div>
+    </div>
+    </ng-container>
+    <div class="col-md-2 col-4 p-2" *ngIf="Babycares?.length>5">
+        <div class="sub-category-img">
+            <a [routerLink]="['Babycarebrandedfoods/c/61b191d3c5aed278ca11c0ba']">
+                <h4>all Category</h4>
+            </a>
+        </div>
+    </div>
+  </div>
+  <div class="product-slide">
+  <app-product-carousel [products]="Babycareproducts"  [heading]="''"></app-product-carousel>
+  </div>
+  </div>
+  
+  <div class="Sub-CatBanner">
+    <div class="BannerWebHome">
+      <a [routerLink]="['Babycarebrandedfoods/c/61b191d3c5aed278ca11c0ba']">
+        <img src="{{ BabycarecategoryDetails.category.id | image:'cat' }}/{{ BabycarecategoryDetails.category.images[1]}}" onerror="this.src='../../../assets/image/no-category.png';" [alt]="BabycarecategoryDetails.category.category?.name" [title]="BabycarecategoryDetails.category.category?.name" *ngIf='BabycarecategoryDetails.category.images[1]?.length>0'>
+        </a>
+    </div>
+  <div class="BannerMobHome">
+    <a href="nivea-men-pure-impact-shower-gel-500-ml/p/61eaecb12da73066de6b44af"><img src="../../../assets/image/Offers/nivea.jpg" alt=""></a>
+  </div>
+  </div>
+  
+  <div class="OfferHomeBox4">
+    <div class="container-fluid">
+        <ul class="OfferBox4">
+          <li>
+            <a href="undefined/p/61eaecaf2da73066de6b370a"><img src="../../../assets/image/Offers/baby1.jpg" alt=""></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecb02da73066de6b39b7"><img src="../../../assets/image/Offers/baby2.jpg" alt=""></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecb12da73066de6b4235"><img src="../../../assets/image/Offers/baby3.jpg" alt=""></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecaf2da73066de6b3897"><img src="../../../assets/image/Offers/baby4.jpg" alt=""></a>
+          </li>
+        </ul>
+    </div>
+  </div>
+  
+  </section>
+  
+  
+  <section class="category-section first-category-bg sub-CatSection">
+  <div class="container">
+  <div class="bg-img"><img src="assets/image/left-head.png">
+    <h2 class="head-2">Daily Essential & Frozen</h2><img src="assets/image/right-head.png" alt="">
+  </div>
+  <div class="row mainSectionList">
+    <ng-container *ngIf="Frozens?.length>0">
+      <div class="col-md-2 col-4 p-2" *ngFor="let Frozen of Frozens | slice:0:5">
+        <div class="sub-category-img">
+          <a [routerLink]="['/dailyessentialfrozen/'+Frozen.urlKey+'/c/61b18e68c5aed278ca11c072/'+Frozen._id]">
+            <img src="{{ Frozen.id | image:'cat' }}/{{ Frozen.images[0]}}" [alt]="Frozen?.name" [title]="Frozen?.name" *ngIf='Frozen.images?.length>0'>
+            <img src="../../../assets/image/no-category.png" *ngIf="Frozen.images[0] == null" style="height: 139px !important;">
+            <h5 class="HomeCatBages" *ngIf="Frozen.offertext">{{Frozen.offertext}}</h5>
+            <p>{{Frozen.name | titlecase}}</p>
+          </a>
+        </div>
+    </div>
+    </ng-container>
+    <div class="col-md-2 col-4 p-2" *ngIf="Frozens?.length>5">
+        <div class="sub-category-img">
+            <a [routerLink]="['Frozenbrandedfoods/c/61b18e68c5aed278ca11c072']">
+                <h4>all Category</h4>
+            </a>
+        </div>
+    </div>
+  </div>
+  <div class="product-slide">
+  <app-product-carousel [products]="Frozenproducts"  [heading]="''"></app-product-carousel>
+  </div>
+  </div>
+  
+  <div class="Sub-CatBanner">
+    <div class="BannerWebHome">
+      <a [routerLink]="['Frozenbrandedfoods/c/61b18e68c5aed278ca11c072']">
+        <img src="{{ FrozencategoryDetails.category.id | image:'cat' }}/{{ FrozencategoryDetails.category.images[1]}}" onerror="this.src='../../../assets/image/no-category.png';" [alt]="FrozencategoryDetails.category.category?.name" [title]="FrozencategoryDetails.category.category?.name" *ngIf='FrozencategoryDetails.category.images[1]?.length>0'>
+        </a>
+    </div>
+  <div class="BannerMobHome">
+    <a href="undefined/p/61eaecb12da73066de6b4644"><img src="../../../assets/image/Offers/mediumBanner6.jpg" alt=""></a>
+  </div>
+  </div>
+  
+  <div class="OfferHomeBox4">
+    <div class="container-fluid">
+        <ul class="OfferBox4">
+          <li>
+            <a href="undefined/p/61eaecaf2da73066de6b3707"><img src="../../../assets/image/Offers/fenrush.jpg" alt="fenrush"></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecb22da73066de6b4984"><img src="../../../assets/image/Offers/de2.jpg" alt=""></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecaf2da73066de6b36f8"><img src="../../../assets/image/Offers/de3.jpg" alt=""></a>
+          </li>
+          <li>
+            <a href="undefined/p/61ed212c742f0368e149a935"><img src="../../../assets/image/Offers/sujirusk.jpg" alt="sujirusk"></a>
+          </li>
+        </ul>
+    </div>
+  </div>
+  
+  </section>
+  
+  
+  <section class="category-section second-bg-category sub-CatSection">
+  <div class="container">
+  <div class="bg-img"><img src="assets/image/left-head.png">
+    <h2 class="head-2">Cleaning & House Holds</h2><img src="assets/image/right-head.png" alt="">
+  </div>
+  <div class="row mainSectionList">
+    <ng-container *ngIf="Cleanings?.length>0">
+      <div class="col-md-2 col-4 p-2" *ngFor="let Cleaning of Cleanings | slice:0:5">
+        <div class="sub-category-img">
+          <a [routerLink]="['/cleaninghouseholds/'+Cleaning.urlKey+'/c/61b1912dc5aed278ca11c08d/'+Cleaning._id]">
+            <img src="{{ Cleaning.id | image:'cat' }}/{{ Cleaning.images[0]}}" [alt]="Cleaning?.name" [title]="Cleaning?.name" *ngIf='Cleaning.images?.length>0'>
+            <img src="../../../assets/image/no-category.png" *ngIf="Cleaning.images[0] == null" style="height: 139px !important;">
+            <h5 class="HomeCatBages" *ngIf="Cleaning.offertext">{{Cleaning.offertext}}</h5>
+            <p>{{Cleaning.name | titlecase}}</p>
+          </a>
+        </div>
+    </div>
+    </ng-container>
+    <div class="col-md-2 col-4 p-2" *ngIf="Cleanings?.length>5">
+        <div class="sub-category-img">
+            <a [routerLink]="['cleaninghouseholds/c/61b1912dc5aed278ca11c08d']">
+                <h4>all Category</h4>
+            </a>
+        </div>
+    </div>
+  </div>
+  <div class="product-slide">
+  <app-product-carousel [products]="Cleaningproducts"  [heading]="''"></app-product-carousel>
+  </div>
+  </div>
+  
+  <div class="Sub-CatBanner">
+    <div class="BannerWebHome">
+      <a [routerLink]="['cleaninghouseholds/c/61b1912dc5aed278ca11c08d']">
+        <img src="{{ CleaningcategoryDetails.category.id | image:'cat' }}/{{ CleaningcategoryDetails.category.images[1]}}" onerror="this.src='../../../assets/image/no-category.png';" [alt]="CleaningcategoryDetails.category.category?.name" [title]="CleaningcategoryDetails.category.category?.name" *ngIf='CleaningcategoryDetails.category.images[1]?.length>0'>
+        </a>
+    </div>
+  <div class="BannerMobHome">
+    <a href="cleaninghouseholds/c/61b1912dc5aed278ca11c08d"><img src="../../../assets/image/Offers/mediumBanner17.jpg" alt=""></a>
+  </div>
+  </div>
+  
+  
+  <div class="OfferHomeBox4">
+    <div class="container-fluid">
+        <ul class="OfferBox4">
+          <li>
+            <a href="undefined/p/61eaecaf2da73066de6b34ac"><img src="../../../assets/image/Offers/cl1.jpg" alt=""></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecaf2da73066de6b345e"><img src="../../../assets/image/Offers/cl2.jpg" alt=""></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecaf2da73066de6b3408"><img src="../../../assets/image/Offers/cl3.jpg" alt=""></a>
+          </li>
+          <li>
+            <a href="undefined/p/61eaecaf2da73066de6b3456"><img src="../../../assets/image/Offers/cl4.jpg" alt=""></a>
+          </li>
+        </ul>
+    </div>
+  </div>
+
+  </section>
+--->
+  
+  <!------ShopByBrand--Section------
+  <section class="brand">
+    <div class="container-fluid">
+       <div class="bg-img"><img src="assets/image/left-head.png">
+        <h2 class="head-2">Brands</h2><img src="assets/image/right-head.png" alt=""></div>
+        <div class="row">
+          <ul class="footerBrandBox">
+            <li *ngFor="let item of brand | slice:0:16" >
+                <div class="footer-brand">
+                  <a [routerLink]="['/']">
+                      <img src="{{apiURL}}public/brand/{{item?.id}}/{{item.image[0]}}" [alt]="item?.name" [title]="item?.name" *ngIf='item.image?.length>0'>
+                      <img src="../../../assets/image/no-category.png" *ngIf="item.image == null">
+                      <p>{{item.name | titlecase}}</p>
+                    </a>
+                </div>
+              </li>
+          </ul>
+    </div>
+    </div>
+  </section>
+  
+  --->
+  
+  <!--
+  <section class="brand ShobyTag">
+    <div class="container-fluid">
+       <div class="bg-img"><img src="assets/image/left-head.png">
+        <h2 class="head-2">Shop By Tags</h2><img src="assets/image/right-head.png" alt=""></div>
+        <div class="row">
+  
+        <div class="col-md-2 col-4 p-2" *ngFor="let item of tags | slice:0:12" >
+            <div class="footer-brand">
+              <a [routerLink]="['/tags/'+item?._id]">
+                  <img src="{{apiURL}}public/brand/{{item?.id}}/{{item.image[0]}}" [alt]="item?.name" [title]="item._name" *ngIf='item.image?.length>0'>
+                  <img src="../../../assets/image/no-category.png" *ngIf="item.image == null">
+                  <p>{{item.name | titlecase}}</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    </div>
+  </section>
+-->
+
+  <!--
+  <section>
+    <div class="OfferHomeBox4">
+      <div class="container-fluid">
+          <ul class="OfferBox4">
+            <li>
+              <a href="undefined/p/61b74d1f6bfe76fb0752d172"><img src="../../../assets/image/Offers/gauri1.jpg" alt=""></a>
+            </li>
+            <li>
+              <a href="undefined/p/61b74d1f6bfe76fb0752d195"><img src="../../../assets/image/Offers/gauri2.jpg" alt=""></a>
+            </li>
+            <li>
+              <a href="undefined/p/61b74d1f6bfe76fb0752d194"><img src="../../../assets/image/Offers/gauri3.jpg" alt=""></a>
+            </li>
+            <li>
+              <a href="undefined/p/61b74d1f6bfe76fb0752d196"><img src="../../../assets/image/Offers/gauri4.jpg" alt=""></a>
+            </li>
+          </ul>
+      </div>
+    </div>
+  </section> -->
+  
+    <section class="footer-banner">
+      <img src="assets/image/banners/fotter-banner.jpg" alt="">
+    </section>
+    </div>
+  </div>
+  

@@ -1,0 +1,60 @@
+<div class="text-center body-img" *ngIf="!SearchProductLoad">
+  <img src="../../../assets/image/gif.gif">
+</div>
+<main class="no-promo" *ngIf="SearchProductLoad" >
+    <!-- common category -->
+    <!-- <app-category-header></app-category-header> -->
+    <div class="container mt-2 search-page">
+        <div class="row">
+            <div class="col-md-3">
+                <!-- <h4 class="member-heading">Searched Category</h4> -->
+                <div class="" *ngIf="products?.length!=0">
+                    <div class="list-group categories-serach side-bar-category">
+                        <a href="#" class="list-group-item list-group-item-action active">
+                            Search Categories
+                        </a>
+                        <a class="list-group-item list-group-item-action" *ngFor="let category of categories" (click)=sortByCategory(category)>{{ category.name | capitalize}}</a>
+                    </div>
+                    <div class="list-group categories-serach-mobile">
+                      <a *ngIf="searchSidebar" (click)="searchSidebarOption('Close')"  class="list-group-item list-group-item-action active"> Search Categories <i class="fa fa-angle-down" aria-hidden="true"></i> </a>
+                      <a *ngIf="!searchSidebar" (click)="searchSidebarOption('Open')"  class="list-group-item list-group-item-action active"> Search Categories <i class="fa fa-angle-up" aria-hidden="true"></i> </a>
+                      <div *ngIf="searchSidebar">
+                        <a class="list-group-item list-group-item-action" *ngFor="let category of categories" (click)=sortByCategory(category)>{{ category.name | capitalize}}</a>
+                      </div>
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <!-- <h4 class="member-heading">Searched Products</h4> -->
+                <!-- <div class="bg-bredcum">
+                    <a (click)="backClicked()">{{rootCategoryName}}</a>
+                    <a (click)="backClicked()">{{subCategoryName}}</a>
+                    <a (click)="backClicked()">{{leafCategoryName}}</a>
+                  </div> -->
+                <div class="card category-product">
+                    <div class="card-body search-card">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-6 p-1 searchBox1" *ngFor="let product of products">
+                                <app-product-card [product]="product" class="searchBox1Inner"></app-product-card>
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="products?.length==0">
+                            <div class="col-xl-3 col-md-4 col-sm-6"  *ngFor="let sp of skeletonProducts">
+                                <app-product-card-skeleton *ngIf="!isSearchProductByKeyAvailable"></app-product-card-skeleton>
+
+                            </div>
+                            <!--<div class="mx-auto">
+                                <img src="../../../assets/image/noProductFound.png" *ngIf="isSearchProductByKeyAvailable">
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    No Products Found!!!</p>
+                            </div> -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>

@@ -1,0 +1,21 @@
+<div class="card pointer categorie ">
+    <div class="card-body categories-body p-1 ">
+        <div class="row align-items-center ">
+            <div class="col-4 col-sm-3 ">
+                <a [routerLink]="['/'+category.urlKey+'/c/'+category._id]">
+                    <img class="img-fluid pl-2 " src="{{ category.id | image:'cat' }}/{{ category.images[0]}} "
+                    onerror="this.src='../../../assets/image/no-product-img.png';" [alt]="category?.name"></a>
+            </div>
+            <div class="col-8 ">
+                <div class="my-4 mx-3 ">
+                    <h5>{{category.name | titlecase}}</h5>
+                    <p class="grey-text ctg-name ">
+                        <span *ngFor="let metatag of category.seo.metaKeywords ">{{metatag}} </span>
+                </div>
+            </div>
+            <a class="btn-floating arrow btn-action ml-auto mr-4 waves-effect waves-light ">
+                <i class="fa fa-chevron-right pl-1 pr-md-2 "></i>
+            </a>
+        </div>
+    </div>
+</div>

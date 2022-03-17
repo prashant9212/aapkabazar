@@ -1,0 +1,69 @@
+<main class="home-margin">
+    <div class="container">
+      <div class="city-title">Online grocery store near Society Name
+      </div>
+      <div>
+        <p class="city-description"> From fresh fruits and vegetables to the daily essentials, now get the most premium
+          quality grocery products
+          delivered at your door-step by a reliable online grocery store like MorningBag. Our online grocery home
+          delivery
+          services can be availed by residents of <b> Society Name. </b></p>
+        <p class="city-description">
+          MorningBag has transformed the way people do their monthly, weekly and daily groceries. <b> online grocery
+            store </b>
+          has
+          never been that easier. Confused about <b> online grocery store near Society Name?</b>
+          Well, no matter you need
+          fresh
+          fruits, vegetables or some pure dairy products, we can serve you with the best, every day!!</p>
+        <p class="city-description">
+          We deliver to various locations in <b> Ajanara G-neX </b> and keep up the tremendous on-time <b>
+            grocery
+            home delivery
+            in
+            Society Name </b>, guaranteeing that all the items from groceries to munchies & drinks
+          reach you within the
+          given
+          time.</p>
+        <p class="city-description">
+          <b> 2 HOUR DELIVERY:</b> Forgot to do grocery on the weekend? Never mind, we can get it all delivered at your
+          doorstep
+          within 2 hours of your online order for groceries at MorningBag.</p>
+        <p class="city-description">
+          <b> IRRESISTIBLE DISCOUNTS: </b>Looking for an online grocery store within your budget? Well, we are here with
+          amazing
+          discounts and offers on premium quality grocery products and daily needs to be delivered in
+          Society Name.</p>
+        <p class="city-description">
+          <b> ONLINE SUPPORT: </b>Facing issues with your orders? Our customers care executives are available at your
+          service
+          whenever
+          you need it.</p>
+        <p class="city-description">
+          <b>
+            FAST DELIVERY: </b>Choose a suitable delivery slot to get all your grocery needs delivered at your door within
+          the given time slot. MorningBag caters to both, the early birds who need all the daily needs and groceries
+          delivered early in the morning and to people who are comfortable with after-work grocery delivery in
+          Society Name.</p>
+      </div>
+  
+  
+  
+      <div class="city-title mt-5">Get superior quality grocery and daily needs </div>
+      <div class="row">
+        <div class="col-md-3 mt-4"  *ngFor='let product of products[0]?.latestProduct' [routerLink]="['/'+product._name+'/p/'+product._id]">
+          <mdb-card class="my-1 text-center"> 
+            <mdb-card-body>
+              <mdb-card-img class="image-size pointer" src="{{product?.id | image}}/{{ product?.images[0] | imageSize:120}}" alt="Card image cap"></mdb-card-img>
+              <mdb-card-title>
+                <h4  class="text-overflow">{{product?.name}}</h4>
+              </mdb-card-title>
+              <p>{{product?.recommendedAttribute}}</p>
+              <p>Rs. {{product?.price}} <del>{{product?.sellPrice}}</del></p>
+            </mdb-card-body>
+          </mdb-card>
+        </div>
+      </div>
+    </div>
+  </main>
+  

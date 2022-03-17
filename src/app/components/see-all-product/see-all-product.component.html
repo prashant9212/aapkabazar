@@ -1,0 +1,28 @@
+<main class="main">
+    <!-- common category -->
+    <app-category-header></app-category-header>
+    <div class="container p-3">
+        <div class="card mb-card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h4 class="card-title"><a>{{ type }}</a></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xl-3 col-md-4 col-6" *ngFor="let product of products">
+                        <app-product-card [product]="product"></app-product-card>
+                    </div>
+                </div>
+                <div class="row" *ngIf="products?.length==0">
+                    <div class="col-md-12 text-center ">
+                        <img src="../../../assets/image/noProductFound.png">
+                        <p>No product found</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

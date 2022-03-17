@@ -1,0 +1,166 @@
+<main class="main">
+    <div class="container UserprofileBox">
+        <div class="row">
+            <div class="col-lg-3 side-menu">
+                <app-profile-sidebar></app-profile-sidebar>
+            </div>
+            <div class="col-lg-9">
+                <div class="profileBox">
+                    <div class="col-sm-5 offset-sm-7">
+                        <div class="btn-group float-right" mdbDropdown>
+                            <button mdbDropdownToggle type="button" mdbBtn color="white"
+                                class="dropdown-toggle custum-dropdown waves-light " mdbWavesEffect>
+                                <span class="black-text">Sort By : </span> <strong>
+                                    {{ sortArg ? sortArg :"All Orders" | capitalize}}</strong>
+                            </button>
+
+                            <div class="dropdown-menu dropdown-primary custum-dropdown-menu w-100">
+                                <a class="dropdown-item" (click)="sortBy('')">All Orders</a>
+                                <div class="divider dropdown-divider"></div>
+                                <a class="dropdown-item" (click)="sortBy('pending')">Pending</a>
+                                <div class="divider dropdown-divider"></div>
+                                <a class="dropdown-item" (click)="sortBy('confirm')">Confirm</a>
+                                <div class="divider dropdown-divider"></div>
+                                <a class="dropdown-item" (click)="sortBy('dispatched')">Dispatched</a>
+                                <div class="divider dropdown-divider"></div>
+                                <a class="dropdown-item" (click)="sortBy('delivered')">Delivered</a>
+                                <div class="divider dropdown-divider"></div>
+                                <a class="dropdown-item" (click)="sortBy('cancelled')">Cancelled</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- New order card -->
+                <div class="load-orders"  infiniteScroll  [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
+                (scrolled)="onScroll()">
+                <div class="card order mb-2 OrderRightBox" *ngFor="let order of orders">
+                    <div class="card-header p-0 order-header">
+                        <div class="row align-items-center px-4 py-2">
+                            <div class="col-sm-8 pt-2">
+                                <h5>Order ID : {{order?.id}} ({{order.productCount}} items)
+                                  <span class="delverTimeslt" *ngIf="order?.deliveredDate">Delivered <span>on {{order?.deliveredDate | date:'d/MMM/y'}}</span></span>
+                                </h5>
+                            </div>
+                            <div class="col-sm-4  p-sm-2 text-right">
+                              <div class="d-flex align-items-center justify-content-end">
+                                <button mdbBtn type="button" class="helpchatbtn" mdbWavesEffect
+                                *ngIf="order?.status==='delivered' && order.isIssueRaised==false"
+                                (click)="openModal(order)">Issue</button>
+                            <button mdbBtn type="button" class="helpchatbtn"
+                                [routerLink]="['/order/detail/'+order._id]" mdbWavesEffect>Details</button>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="row mx-1">
+                            <div class="col-sm-8">
+                                <div class=" user-order py-sm-4 py-2">
+                                  <p>
+                                    <strong>Order Created:  </strong> <span>{{order?.created  | date:'medium'}}</span>  
+                                  </p>
+                                  <p>
+                                    <strong>Delivery Date: </strong><span>{{order?.deliveryDate | date:'d/MMM/y'}}</span> 
+                                  </p>
+                                  <p>
+                                    <strong>Time Slot :</strong> <span> {{order?.deliveryTime?.slot | titlecase}}</span>    
+                                   </p>
+                                   <p>
+                                    <strong>Order Status : </strong> <span class="custom-primary-color">{{order?.status | titlecase}} </span>
+                                   </p>
+                                    <!-- <p class="text-capitalize mb-0"><strong>Address : </strong>{{order?.address?.line1 | titlecase}}-{{order?.address?.line2 | titlecase}} {{order?.address?.fullAddress | titlecase}}</p> -->
+                                </div>
+                            </div>
+                            <div class=" col-sm-4 py-sm-4 ">
+                                <div class="btn-group float-sm-right mb-2 mb-sm-0">
+                                    <p class="mb-0"><strong>Total Order : </strong> <i class="fa fa-inr"></i><span>{{order?.amount}}</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="text-center" *ngIf='isShowSpinner'>
+                  <div class="spinner-border text-primary" role="status">
+                  </div>
+              </div>
+              </div>
+               <!-- /New order card -->
+            </div>
+        </div>
+    </div>
+</main>
+<ng-template #otherIssueModal>
+  <!-- <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content modal-content-text"> -->
+      <!-- <div class="modal-header">
+
+      </div> -->
+      <div class="modal-body">
+        <button type="button" (click)='closeModal()' class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" >&times;</span>
+        </button>
+        <div class="row px-3 py-2">
+          <div class="col-md-12">
+            <form #complaint="ngForm" [formGroup]='issueForm' (ngSubmit)='raiseIssue()'>
+              <h5 class="my-2 text-center ml-1">Please enter your query here</h5>
+              <p class="ml-1 mt-4 mb-0 grey-text">Issue Type<sup class="text-danger">*</sup></p>
+              <select name="cars" class="custom-select" formControlName='type'>
+                <option > Expired item(s) received. </option>
+                <option> The price difference in item(s) received </option>
+                <option> Quality/Damage issue in item(s) delivered </option>
+                <option> Item(s) in my order was missing</option>
+                <option> Wrong item(s) received </option>
+                <option> I haven't received my refund.</option>
+                <option> I have received incorrect refund</option>
+                <option> Amount debited twice</option>
+                <option> Other</option>
+              </select>
+              <p class="ml-1 mt-4 mb-0 grey-text" *ngIf="issueForm.value['type']=='Other'" >Subject<sup class="text-danger">*</sup></p>
+              <input type="subject" class="form-control" *ngIf="issueForm.value['type']=='Other'" id="subject" formControlName='subject'>
+              <small class='text-danger'
+                *ngIf='issueForm.get("subject").touched && issueForm.get("subject").pristine'>Complain subject
+                is required</small>
+
+              <p class="ml-1 mb-0 mt-4 grey-text required">Your Email (We will reply to you on this
+                email)<sup class="text-danger">*</sup></p>
+              <input type="email" class="form-control" id="email" formControlName='email'>
+              <small class='text-danger'
+                *ngIf='issueForm.get("email").touched && issueForm.get("email").pristine'>Email is
+                required</small>
+              <small class='text-danger'
+                *ngIf='issueForm.get("email").dirty && issueForm.get("email").invalid'>Valid email is
+                required</small>
+
+              <p class="ml-1 mb-0 mt-4 grey-text">Mobile No.<sup class="text-danger">*</sup></p>
+              <input type="number" class="form-control" id="mobile" formControlName='mobile'>
+              <small class='text-danger'
+                *ngIf='issueForm.get("mobile").touched && issueForm.get("mobile").pristine'>Mobile Number is
+                required</small>
+              <small class='text-danger'
+                *ngIf='issueForm.get("mobile").dirty && issueForm.get("mobile").invalid'>A valid Mobile number
+                is required</small>
+
+
+              <p class="ml-1 mt-4 mb-0 grey-text">Message (Tell us about the issue)<sup class="text-danger">*</sup></p>
+              <div class="input-group">
+                <div class="field span3">
+                  <textarea class="form-control" wrap='off' rows="4" cols="200" formControlName='message'></textarea>
+                  <small class='text-danger'
+                    *ngIf='issueForm.get("message").touched && issueForm.get("message").pristine'>Message is
+                    required</small>
+
+                </div>
+              </div>
+              <button mdbBtn type="submit" class="mt-4 primary-btn mx-auto d-block"
+                mdbWavesEffect [disabled]='!issueForm.valid' *ngIf='!isShowSpinner'>Submit</button>
+                <div class="text-center" *ngIf='isShowSpinner'>
+                  <div class="spinner-border text-primary"></div>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    <!-- </div>
+  </div> -->
+</ng-template>

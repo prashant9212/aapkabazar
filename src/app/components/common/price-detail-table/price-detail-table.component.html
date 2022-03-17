@@ -1,0 +1,171 @@
+<div class="card price-table CartRightBox">
+    <div class="card-header py-3">
+        <h5 class="card-title">Price Details</h5>
+    </div>
+    <ng-container *ngIf='!_CS.isShowSpinner'>
+        <div class="price-warning" *ngIf="bagPrice?.isDeliveryCharges">
+            <p> {{bagPrice?.deliveryChargeMessage}} </p>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    <p class="">MRP Total</p>
+                </div>
+                <div class="col-6">
+                    <p class="text-right">₹{{ bagPrice?.mrpTotal }}</p>
+                </div>
+            </div>
+        </div>
+        <hr class="grey-hr accent-2 mb-0 mt-0 d-inline-block mx-auto" style="width: 100%;">
+        <div class="card-body discountBox">
+            <div class="row">
+                <div class="col-6">
+                    <p class="totalSavAmt">Product Discount</p>
+                </div>
+                <div class="col-6">
+                    <p class="text-right totalSavAmt">- ₹{{ bagPrice?.totalSavings }}</p>
+                </div>
+            </div>
+        </div>
+        <hr class="grey-hr accent-2 mb-0 mt-0 d-inline-block mx-auto" style="width: 100%;">
+        <div class="card-body totalSavAmt">
+            <div class="row">
+                <div class="col-6">
+                    <p>Delivery Charges</p>
+                </div>
+                <div class="col-6">
+                    <p class="text-right ">{{ bagPrice?.deliveryCharges }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-body" *ngIf="bagPrice?.isPromocodeApplied && promocodeDetails.type=='instant'">
+            <div class="row mt-2">
+                <div class="col-6">
+                    <p class="text-success">Coupon Discount</p>
+                </div>
+                <div class="col-6">
+                    <p class="text-right text-success">- ₹{{ bagPrice?.couponDiscountAmount }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <hr class="grey-hr accent-2 mb-0 mt-0 d-inline-block mx-auto" style="width: 100%;">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    <p class="netPayAmt">Total Amount</p>
+                </div>
+                <div class="col-6">
+                    <p class="text-right netPayAmt">₹{{ bagPrice?.payableAmount }}</p>
+                </div>
+            </div>
+        </div>
+        <hr class="grey-hr accent-2 mb-0 mt-0 d-inline-block mx-auto" style="width: 100%;">
+        <span class="totalSavAmttext">You Save ₹{{ bagPrice?.totalSavings }}</span>
+        <div class="card-body p-0 pr-4" *ngIf="checkoutPage">
+            <div class="d-flex justify-content-between align-items-center" *ngIf="!promocodeDetails.promocode">
+                <button type="button" class="promocode-btn" (click)="addPromocode()" mdbBtn color="default"
+                    rounded="true" data-toggle="modal" data-target="#basicExample" mdbWavesEffect>
+                    <span><img class="mr-2" width="24" height="24"
+                            src="../../../../assets/image/icon/ribbon.png" class="offers-img"></span>Apply Offers & Promocodes</button>
+                <mdb-icon fas icon="angle-right" size="2x"></mdb-icon>
+            </div>
+        </div>
+        <div class="align-items-center form-row" *ngIf="promocodeDetails.promocode && checkoutPage">
+            <div class="col-xl-8 col-lg-12 col-8">
+                <p class="promo-applied pl-3">Promo code<span class="promo-name"> {{ promocodeDetails.promocode
+                        }}</span>
+                    has been <span class="text-success">applied!</span></p>
+            </div>
+            <div class="col-xl-4 col-lg-12 col-4">
+                <button type="submit" class="btn z-depth-0 remove-btn" (click)=removePromocode()>Remove</button>
+            </div>
+            <!-- Grid column -->
+        </div>
+
+        
+        <div class="card-body" *ngIf="!checkoutPage && bagPrice?.mrpTotal>0">
+            <div class="row" >
+                <div class="col-xl-6 col-md-12 col-sm-6 p-2">
+                    <button class="btn btn-block btn-custom-price-primary px-2"
+                        [routerLink]="['/checkout']">Checkout</button>
+                </div>
+                <div class="col-xl-6 col-md-12 col-sm-6 p-2">
+                    <button class="btn btn-block btn-custom-price-white px-2" routerLink="/">Continue Shopping </button>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <div class="text-center spinner" *ngIf='_CS.isShowSpinner'>
+        <div class="spinner-border text-primary" role="status">
+        </div>
+    </div>
+</div>
+
+<!-- promo code  -->
+<ng-template #promocodeModal>
+
+    <!-- <div mdbModal #frameOfferModal="mdbModal" class="modal fade right" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notify" role="document"> -->
+    <div class="modal-content modal-lg">
+        <div class="modal-header" mb-color="second">
+            <p class="heading lead mb-0">Latest Offers</p>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hidePromocodeModal()">
+                <span aria-hidden="true" class="white-text">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body offer-modal">
+            <form [formGroup]="promocodeForm" (ngSubmit)=applyPromocode()>
+                <div class="form-row align-items-center">
+                    <div class="col-9">
+                        <div class="md-form">
+                            <input type="text" class="form-control mb-2" id="inlineFormInputMD" name="promoCode"
+                                formControlName="promocode" placeholder="Enter Promo Code">
+                            <label class="sr-only" for="inlineFormInputMD">Enter Promo Code</label>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <button type="submit" class="btn z-depth-0 btn-custom-price-primary btn-sm apply">Apply</button>
+                    </div>
+                </div>
+            </form>
+            <div class="row align-items-center" *ngFor="let promocode of promocodes">
+                <div class="col-md-12">
+                  <div class="modal-apply">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="promo-code">{{ promocode.promocode | uppercase }}</h3>
+                        <button type="submit" class="btn z-depth-0 btn-custom-price-primary btn-sm promo"
+                            (click)=selectPromocode(promocode)>Select</button>
+                    </div>
+                    <div class="d-flex ">
+                        <!-- <span class="title" [innerHtml]="promocode.name"></span> -->
+                        <p class="promo" [innerHtml]="promocode.cartDescription">
+                            <!-- <span class="title" [innerHtml]="promocode.name"></span> -->
+                        </p>
+
+                    </div>
+
+                    <div class="ws-normal">
+                        <div class="ws-box mt-2" [ngClass]="{'ws-box-full': id==promocode._id}">
+                            <div class="w-100" [innerHtml]="promocode.description"></div>
+                        </div>
+                        <!-- <a type="bxutton" fill="clear">Read More</a> -->
+                        <a class="more" *ngIf="id==promocode._id" (click)="readLess()">Read less<i
+                                class="fas ml-1 fa-angle-up"></i></a>
+                        <a class="more" *ngIf="id!=promocode._id" (click)="readMore(promocode)">Read More <i
+                                class="fas ml-1 fa-angle-down"></i></a>
+                    </div>
+                    <!-- <hr class="grey-hr accent-2 mb-0 mt-0 d-inline-block mx-auto" style="width: 100%;"> -->
+                </div>
+                <div class="col-md-3 px-0">
+
+                </div>
+                </div>
+              </div>
+
+        </div>
+    </div>
+    <!-- </div>
+</div> -->
+</ng-template>
+<!-- /promo code  -->

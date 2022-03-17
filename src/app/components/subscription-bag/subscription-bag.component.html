@@ -1,0 +1,183 @@
+<main class="main">
+    <div class="container bag">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card mb-2 pointer" (click)="openAddAddressModal(subscriptionAddress)">
+                    <div class="card-body">
+                        <div class="add-new-address">
+                            <i class="fa fa-plus mr-2" aria-hidden="true"></i>
+                            <h2 class="add-address-heading">Add New Address</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card address mb-2">
+                    <div class="card-header subscription-header">
+                        <h4 class="font-weight-normal white-text">Subscribe Address</h4>
+                        <!-- <div class="row align-items-center ">
+                            <div class="col-sm-6 pt-2">
+                                
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-bold custom-primary-color">Home</h6>
+                            <div class="d-flex align-items-center">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true" mb-text-color="second"
+                                    tooltip="Request To Edit Address"></i>
+                            </div>
+                        </div>
+                        <div class="d-flex ">
+                            <p>Nishant Patel</p>
+                        </div>
+                        <div>
+                            <P>Mobile No: 9990446871</P>
+                        </div>
+                        <p>D1-104 , Supertech</p>
+                        <p>Supertech Livingston Block A 206, Crossings Republik, Ghaziabad, Uttar Pradesh 201009, India
+                        </p>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div>
+                        <div class="card-header subscription-header">
+                            <h4 class="font-weight-normal white-text"> Subscribe</h4>
+                            <!-- <h4 class="font-weight-normal">Total ({{ bagList?.length }} item) : <span class="custom-primary-color">₹{{ bagPrice?.payableAmount }}</span></h4> -->
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="row px-4 align-items-center py-2">
+                                <div class="col-sm-4">
+                                    <img class="mx-auto pointer py-2 bag-img"
+                                        src="https://www.morningbag.com/api/public/product/amul-full-cream-milk-500ml/1580543597981-200x200.png">
+                                    <a class="offers">10% OFF</a>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="cart-list">
+                                        <p class="h5 mt-2">amul toned milk 500ml</p>
+                                        <div class="d-flex align-items-center">
+                                            <h4 class="pointer mr-3">₹26 <small
+                                                    class="grey-text ml-2"><del>₹26</del></small></h4>
+                                            <button type="button" class=" bag-btn-outline">500ml</button>
+                                        </div>
+                                        <div class="mt-3">
+                                            <button type="button" mdbWavesEffect
+                                                class="pt-1 z-depth-1 waves-effect btn-outline-light"><i
+                                                    class="fa fa-minus " aria-hidden="true"></i></button>
+                                            <button type="button" class=" waves-effect   qty-btn"><span
+                                                    class="">2</span></button>
+                                            <button type="button" mdbWavesEffect
+                                                class="pt-1 z-depth-1  waves-effect btn-outline-light"><i
+                                                    class="fa fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="grey-hr accent-2 mb-0 mt-0 d-block mx-auto" style="width: 100%;">
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <button type="button" mdbWavesEffect class="pt-1 z-depth-1 waves-effect btn-primary">
+                            ₹ 52/Day</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <app-price-detail-table></app-price-detail-table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- add new address for subscription -->
+<ng-template #subscriptionAddress>
+    <div class="modal-body">
+        <!-- <div class="container"> -->
+            <!-- Address Type 1-->
+            <form>
+              <!-- <div class="society"> -->
+                <div class="row">
+                  <div class="col-md-6 ">
+                    <div class=" my-form form-group">
+                        <label for="name" class="">Name<span class="mendatoryAstrick">*</span></label>
+                      <input  type="text" id="name" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-6 ">
+                    <div class=" my-form form-group">
+                        <label for="mobileno" class="">Mobile No<span class="mendatoryAstrick">*</span></label>
+                      <input type="number"
+                        id="mobileno" class="form-control"  maxlength="10">
+                    </div>
+                  </div>
+                </div>
+                <div class="row ">
+                  <div class="col-md-6 ">
+                    <div class="my-form form-group">
+                        <label for="state" class="">State<span class="mendatoryAstrick">*</span></label>
+                      <select class="browser-default custom-select">
+                        <option disabled >Select State<span class="mendatoryAstrick">*</span></option>
+                        <option value="state">UP</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6  ">
+                    <div class="my-form">
+                        <label for="city" class="">City<span class="mendatoryAstrick">*</span></label>
+                      <select class="browser-default custom-select">
+                        <option disabled ngvalue="null">City<span class="mendatoryAstrick">*</span></option>
+                        <option value="city">G.Noida</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 ">
+                    <div class="my-form">
+                        <label for="society" class="">Society<span class="mendatoryAstrick">*</span></label>
+                      <select class="browser-default custom-select">
+                        <option disabled>Society<span class="mendatoryAstrick">*</span></option>
+                        <option value="society">Supertech</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6  ">
+                    <div class="my-form">
+                        <label for="block" class="">Block<span class="mendatoryAstrick">*</span></label>
+                      <select class="browser-default custom-select">
+                        <option disabled>Block<span class="mendatoryAstrick">*</span></option>
+                        <option value="block">B</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 ">
+                    <!-- <div class="my-form">
+                      <input mdbInputDirective  class="w-100 form-control" id="flatNo"
+                        list="hosting-plan" type="text" autocomplete="off">
+                      <label for="flatNo" class="">Flat No<span class="mendatoryAstrick">*</span></label>
+                      <datalist id="hosting-plan">
+                        <option value="flat">104</option>
+                      </datalist>
+                    </div> -->
+                    <div class="my-form">
+                        <label for="flat-no" class="">Flat No<span class="mendatoryAstrick">*</span></label>
+                        <select class="browser-default custom-select">
+                          <option>Flat No<span class="mendatoryAstrick">*</span></option>
+                          <option value="block">104</option>
+                        </select>
+                      </div>
+                  </div>
+                </div>
+              <!-- </div> -->
+              <div class="mt-3">
+                <!-- <button class="btn btn-lg btn-custom-primary">UPDATE
+                  ADDRESS</button> -->
+                <button class="btn btn-custom-primary" >CONTINUE</button>
+              </div>
+            </form>
+          <!-- </div> -->
+    </div>
+  </ng-template>
+<!-- add new address for subscription-->

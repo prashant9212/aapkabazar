@@ -1,0 +1,61 @@
+<main class="main">
+    <div class="container UserprofileBox">
+        <div class="row">
+            <div class="col-md-3 side-menu">
+                <app-profile-sidebar></app-profile-sidebar>
+            </div>
+            <div class="col-lg-9">
+                <div class="card profileBox"  *ngIf='!isShowSpinner'>
+                    <div class="card-header information">
+                        <div class="col-sm-12">
+                            Manage Address
+                        </div>
+                    </div>
+                    <div class="card-body pb-4 p-0">
+                        <div class="col-md-12">
+                            <div class="col-sm-12 py-2 pointer addBtn1" (click)="showAddressModal()"> Add New Address </div>
+                        </div>
+                        <div class="row mt-4 mx-4" *ngIf="addressList?.length==0">
+                            <div class="col-sm-12 border address py-2">
+                                <p class="text-center">No address found</p>
+                            </div>
+                        </div>
+                        <div class="addressBoxmain">
+                            <div class="addressBox" *ngFor="let address of addressList">
+                                <div class="border address py-2">
+                                    <div class="d-flex justify-content-between">
+                                        <h6 class="mt-2 font-weight-bold custom-primary-color">{{ address?.type | uppercase}}</h6>
+                                        <div class="d-flex align-items-center">
+                                            <i class="fa fa-trash-o pointer fa mr-2" mb-text-color="danger" aria-hidden="true" tooltip="Delete Address" (click)=deleteAddress(address?._id)></i>
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true" mb-text-color="second" tooltip="Edit Address" (click)=updateAddress(address)></i>
+                                        </div>
+                                    </div>
+                                    <div class="addmain">
+                                        <p>
+                                            <strong>Name :</strong> {{ address?.name | titlecase }}
+                                        </p>
+                                        <p>
+                                            <strong>Mobile :</strong> {{ address?.mobileNo }}
+                                        </p>
+                                    </div>
+                                    <div>
+
+                                    </div>
+                                    <p>{{ address?.line1 | titlecase }} , {{ address?.line2 | titlecase}}</p>
+                                    <p>{{ address?.fullAddress | titlecase}}</p>
+                                    <button type="button" class="DeliveryBtn" mb-color="primary" (click)="setDefaultAddress(address?._id)" *ngIf="!address?.isDefault">Deliver Here</button>
+                                    <button type="button" class="DeliveryBtn" disabled mb-color="primary" *ngIf="address?.isDefault"><i class="text-success mr-1 fa fa-check" aria-hidden="true"></i> Deliver Here</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center spinner" *ngIf='isShowSpinner'>
+                    <div class="spinner-border text-primary" role="status">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>

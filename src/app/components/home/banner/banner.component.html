@@ -1,0 +1,28 @@
+<div class="desktop">
+<!-- <mdb-carousel class="banner" [animation]="'slide'" *ngIf="banners?.banners?.length>0">
+    <mdb-carousel-item >
+        <img class="d-block w-100" src="{{ banners?.id | image:'banners'}}/{{ banner.image[0] ? banner?.image[0] : banner?.image[1] }}" [routerLink]="[banner.searchKeywordWeb]">
+    </mdb-carousel-item>
+</mdb-carousel> -->
+
+  <owl-carousel-o [options]="customOptions" *ngIf="banners?.banners?.length>0">
+    <ng-template carouselSlide *ngFor="let banner of banners.banners">
+      <img class="d-block w-100" src="{{ banners?.id | image:'banners'}}/{{ banner.image[0] ? banner?.image[0] : banner?.image[1] }}" [routerLink]="[banner.searchKeywordWeb]">
+    </ng-template>
+  </owl-carousel-o>
+</div>
+
+<div class="phone">
+<!-- <mdb-carousel class="banner" [animation]="'slide'" *ngIf="banners?.banners?.length>0">
+  <mdb-carousel-item *ngFor="let banner of banners.banners">
+      <img class="d-block w-100" src="{{ banners?.id | image:'banners'}}/{{ banner.image[1] ? banner?.image[1] : banner?.image[1] }}" [routerLink]="[banner.searchKeywordApp]">
+  </mdb-carousel-item>
+</mdb-carousel> -->
+<owl-carousel-o [options]="customOptions" *ngIf="banners?.banners?.length>0">
+  <ng-template carouselSlide *ngFor="let banner of banners.banners">
+    <img class="d-block w-100" src="{{ banners?.id | image:'banners'}}/{{ banner.image[1] ? banner?.image[1] : banner?.image[1] }}" [routerLink]="[banner.searchKeywordApp]">
+  </ng-template>
+</owl-carousel-o>
+</div>
+
+

@@ -1,0 +1,28 @@
+<main class="main">
+    <div class="container UserprofileBox">
+        <div class="row">
+            <div class="col-md-3">
+                <app-profile-sidebar></app-profile-sidebar>
+            </div>
+            <div class="col-md-9">
+                <div class="card profileBox">
+                    <div class="card-header p-3 information">
+                        Refer & Earn
+                    </div>
+                    <div class="card-body">
+                        <form role="form">
+                           <h6>Invite Your Friends To Experience The Fastest Grocery Delivery And Get {{ recieverAmount }} Each!</h6>
+                           <p class="copy-code">Copy Your Referral Code</p>
+                           <div class="row">
+                               <div class="col-12">
+                                <button type="button" class="CouponCode" mdbWavesEffect>{{ code }}</button>
+                                <button type="button" class="CouponBtn" mdbWavesEffect (click)="copyCode()"><i class="fa fa-files-o" aria-hidden="true"></i> Copy Coupon</button>
+                               </div>
+                           </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,30 @@
+<main class=" d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+    <div class="row w-100">
+        <div class="col-md-6 col-lg-4 offset-lg-4 offset-md-3">
+            <div class="card status-card z-depth-1">
+                <div class="card-body">
+                    <img alt="Success" src="/assets/image/orderSucceful-image.png">
+                    <div class="text-center">
+                        <h6 class="mt-4 font-weight-semi-bold">Your complaint has been registered successfully!</h6>
+                    </div>
+                    <div class="flex-box">
+                        <h6 class="mt-4"> Ticket No</h6>
+                        <label class="mt-4 font-weight-bold" mb-text-color="second"> {{params.id}}</label>
+                    </div>
+                   
+                    <div class="flex-box">
+                        <h6> Date & Time</h6>
+                        <h6>{{ params.date | date:'medium' }}</h6>
+                    </div>
+                    <!-- <div class="flex-box">
+                        <h6 class=""> Complaint Status</h6>
+                        <label class=" font-weight-bold green-text"> Closed</label>
+                        <label class="font-weight-bold orange-text" > In Progress</label>
+                    </div> -->
+                    <button type="button" class="btn-block continue waves-effect" mdbBtn mdbWavesEffect
+                        [routerLink]="['']">Continue Shopping</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

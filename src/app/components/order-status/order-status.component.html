@@ -1,0 +1,55 @@
+<main class="main">
+    <div>
+        <div class="container success margin-top sucessBox">
+            <div class="row">
+                <div class="col-md-8 offset-md-2" *ngIf='orderData.success'>
+                    <div class="card">
+                        <div class="card-body pb-5">
+                            <div class="verify mx-auto">
+                                <!-- <label class="custom-control overflow-checkbox">
+                                  <input type="checkbox" class="overflow-control-input" checked disabled>
+                                  <span class="overflow-control-indicator"></span>
+                                </label> -->
+                                <img src='../../../assets/image/sucess.gif' >
+                            </div>
+                            <div class="payment-success">
+                                <h1 class="text-center custom-primary-color h1-responsive text-capitalize">Your order has been placed.</h1>
+                            </div>
+                            <div class="col-md-12 offset-md-3">
+                                <div *ngIf="orderData.success">
+                                    <label class="col-6 grey-text"> Order id</label>
+                                    <label class="col-6">#{{ orderData?.orderId }}</label>
+                                </div>
+                                <div *ngIf="orderData.success">
+                                    <label class="col-6 grey-text">Mobile No.</label>
+                                    <label class="col-6">{{ orderData?.mobileNo }}</label>
+                                </div>
+                                <div *ngIf="orderData.success">
+                                    <label class="col-6 grey-text">Order Date</label>
+                                    <label class="col-6 grey-text">{{ orderData?.date | date }}</label>
+                                </div>
+                                <div *ngIf="orderData.success">
+                                    <label class="col-6 grey-text">Payment Mode</label>
+                                    <label class="col-6 grey-text text-capitalize">{{ orderData?.paymentMode }}</label>
+                                </div>
+                                
+                                <div *ngIf="orderData.success">
+                                    <label class="col-6 grey-text">Total Order</label>
+                                    <label class="col-6">₹{{ orderData?.amount }}</label>
+                                </div>                                                                 
+                            </div>
+                            <div class="read-more-box">
+                                <button type="button" class="btn read-more-btn btn-rounded waves-effect waves-light" *ngIf="orderData.success && orderData.paymentMode != 'cod'" [routerLink]="['/order/detail/'+orderData?._id]">Order Details</button>
+                                <button type="button" class="btn read-more-btn btn-rounded waves-effect waves-light" [routerLink]="['/order']">Check order</button>
+                            </div>   
+                        </div>                      
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div class="text-center" *ngIf='isShowInProgress'>
+    <img src='../../../assets/image/in-progress.gif' >
+</div>

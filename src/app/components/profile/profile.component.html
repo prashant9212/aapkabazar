@@ -1,0 +1,58 @@
+<main class="main Userprofile">
+    <div class="container UserprofileBox">
+        <div class="row">
+            <div class="col-md-3">
+                <app-profile-sidebar></app-profile-sidebar>
+            </div>
+            <div class="col-md-9">
+                <div class="card profileBox">
+                    <div class="card-header p-3 information">
+                        Personal Information
+                    </div>
+                    <div class="card-body">
+                        <form role="form" [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+                            <p class="black-text mb-1">Name: <span class="mendatoryAstrick">*</span></p>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group profile-form">
+                                        <input type="text" class="form-control" placeholder="Name" id="name" formControlName="name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-7">
+                                    <p class="black-text mb-1">Email:<span class="mendatoryAstrick">*</span></p>
+                                    <div class="form-group profile-form">
+                                        <input type="email" class="form-control" placeholder="Email" id="email" formControlName="email">
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <p class="black-text mb-1">Date of Birth<span class="text-black">(Optional)</span>:</p>
+                                    <div class="form-group profile-form">
+                                        <input type="date" placeholder="Chose a date" value="{{ dateValue | date:'mm/dd/yyyy' }}" class="form-control" formControlName="DOB">
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="black-text mb-1">Mobile Number:<span class="mendatoryAstrick">*</span></p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class=" my-0 my-form">
+                                        <div class="form-group profile-form">
+                                            <input type="number" class="form-control" placeholder="Mobile Number" formControlName="phoneNo">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <button type="submit" class="profilebtn" *ngIf='!isShowSpinner' mdbWavesEffect>Update</button>
+                                    <div class="spinner-border text-primary" *ngIf='isShowSpinner'></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

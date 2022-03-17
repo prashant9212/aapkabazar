@@ -1,0 +1,110 @@
+<!-- <main class="main">
+    <div>
+        <div class="container success margin-top">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="card">
+                        <div class="card-body pb-5">
+                            <div class="verify mx-auto">
+                                <label class="custom-control overflow-checkbox">
+                                  <input type="checkbox" class="overflow-control-input" checked disabled>
+                                  <span class="overflow-control-indicator"></span>
+                                </label>
+                            </div>
+                            <div class="payment-success">
+                                <h1 class="text-center custom-primary-color h1-responsive text-capitalize" *ngIf="queryParams.type=='payment'">Payment Received</h1>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-8 offset-md-3">
+                                    <div>
+                                        <label class="col-6 grey-text">Date</label>
+                                        <label class="col-6 grey-text">{{ queryParams?.date | date }}</label>
+                                    </div>
+                                    <div>
+                                        <label class="col-6 grey-text">Payment Type</label>
+                                        <label class="col-6 grey-text text-capitalize">{{ queryParams?.paymentMode }}</label>
+                                    </div>
+                                    <div>
+                                        <label class="col-6 grey-text">Amount Added</label>
+                                        <label class="col-6">₹{{ queryParams?.amount }}</label>
+                                    </div>
+                                    <div>
+                                        <label class="col-6 grey-text"> Transaction id</label>
+                                        <label class="col-6">{{ queryParams?.transactionId }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="read-more-box">
+                            <button type="button" class="btn read-more-btn btn-rounded waves-effect waves-light" [routerLink]="['/wallet']" *ngIf="queryParams.type=='payment' && queryParams.isWallet">Go to Wallet</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main> -->
+
+<main class="main">
+    <div class="row">
+        <div class="AddMonryPay">
+            <div  class="card status-card z-depth-1">
+                <div class="card-body">
+                    <img alt="Success" class="pytDone" *ngIf="(paymentData.isWallet || paymentData.isOrder) && paymentData.success" src="/assets/image/orderSucceful-image.png">
+                    <img alt="Failed" *ngIf="paymentData.success==false && paymentData.isWallet" src="/assets/image/cancel.gif">
+                    <!-- <img alt="Success" *ngIf="paymentData.isOrder && paymentData.success && orderData.success" src="/assets/image/orderSucceful-image.png"> -->
+                    <img alt="In Progress" *ngIf="paymentProgress" src="/assets/image/in-progress.gif">
+                    <img alt="Failed" *ngIf="paymentData.isOrder && orderData.success == false" src="/assets/image/cancel.gif">
+                    <div class="flex-box">
+                        <h6 class="mt-4"> Payment Status</h6>
+                        <label class="mt-4 font-weight-bold green-text" *ngIf="paymentData.success"> Success</label>
+                        <label class="font-weight-bold orange-text" *ngIf="paymentProgress" > Pending</label>
+                        <label class="mt-4 font-weight-bold red-text" *ngIf="paymentData.success==false"> Failed</label>
+                    </div> 
+                    <!-- <div class="flex-box" *ngIf="paymentData.isOrder">
+                        <h6 class="mt-4"> Order Status</h6>
+                        <label class="mt-4 font-weight-bold green-text" *ngIf="orderData.success"> Success</label>
+                        <label class="font-weight-bold orange-text" *ngIf="paymentProgress" > Pending</label>
+                        <label class="mt-4 font-weight-bold red-text"  *ngIf="orderData.success==false "> Failed</label>
+                    </div> -->
+                    <div class="flex-box" *ngIf="paymentData.isOrder && orderData.success">
+                        <h6> Order Id </h6>
+                        <h6> #{{ orderData?.orderId }} </h6>
+                    </div>
+                    <div class="flex-box" *ngIf="paymentData.isOrder && orderData.success">
+                        <h6> Order Date</h6>
+                        <h6> {{ orderData?.date | date }}</h6>
+                    </div>
+                    <div class="flex-box" *ngIf="paymentData.isWallet">
+                        <h6> Payment Mode </h6>
+                        <h6> {{ paymentData?.paymentMode }} </h6>
+                    </div>
+                    <div class="flex-box" *ngIf="paymentData.isWallet && paymentData.success">
+                        <h6> Transaction Id </h6>
+                        <h6> {{ paymentData?.transactionId }} </h6>
+                    </div>                    
+                    <div class="flex-box" *ngIf="paymentData.isOrder && orderData.success">
+                        <h6> Mobile No </h6>
+                        <h6> {{ orderData?.mobileNo }} </h6>
+                    </div>
+                    <div class="flex-box" *ngIf="paymentData.isOrder && orderData.success">
+                        <h6> Total Paid </h6>
+                        <h6><i class=" fa fa-inr"></i> {{ orderData?.amount }} </h6>
+                    </div>
+                    <div class="flex-box" *ngIf="paymentData.isWallet">
+                        <h6> Amount to be Added </h6>
+                        <h6><i class=" fa fa-inr"></i> {{ paymentData?.amount }} </h6>
+                    </div>
+
+                    <div class="flex-box">
+                        <h6> Message  </h6>
+                        <h6> {{ message }} </h6>
+                    </div>
+                    <button  type="button" class="btn-block continue waves-effect" mdbBtn mdbWavesEffect *ngIf="paymentData.isOrder && orderData.success" [routerLink]="['/order/detail/'+orderData?._id]">Order Details</button>
+                    <button  type="button" class="btn-block continue waves-effect" mdbBtn mdbWavesEffect *ngIf="paymentData.isOrder && orderData.success==false" [routerLink]="['']">Continue Shopping</button>
+                    <button  type="button" class="btn-block continue waves-effect" mdbBtn mdbWavesEffect *ngIf="paymentData.isWallet" [routerLink]="['']">Continue Shopping</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,58 @@
+<main class="main">
+    <div class="container UserprofileBox">
+        <div class="row">
+            <div class="col-md-3">
+                <app-profile-sidebar></app-profile-sidebar>
+            </div>
+            <div class="col-md-9" >
+                <div class="card profileBox">
+                    <div class="card-header p-3 information">
+                        Offers
+                    </div>
+
+                    <div class="card-body" >
+                      <div class="text-center" *ngIf="!promocodes">
+                        <img src="../../../assets/image/offernotfound.png">
+                      </div>
+                        <div class="row" *ngIf='!isShowSpinner'>
+                            <div class="col-md-12" *ngFor="let promocode of promocodes">
+                                <div class="offer">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <p class="promo" >{{ promocode.promocode | uppercase}}</p>
+                                    <button type="button" class="btn btn-custom-primary" mdbWavesEffect (click)="copyCode(promocode.promocode)" >Copy Code</button>
+                                    </div>
+                                    <h6 class="title" [innerHtml]="promocode.cartDescription"></h6>
+                                    <!-- <p class="dis">use code <span>{{ promocode.promocode | uppercase}}</span> </p> -->
+                                    <p class="dis-all" [ngClass]="{'dis-full': id==promocode._id}" [innerHtml]="promocode.description"></p>
+                                    <button  type="button" class="btn more" mdbWavesEffect  *ngIf="id!=promocode._id" (click)="readMore(promocode)">Read More <i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    <button  type="button" class="btn more" mdbWavesEffect  *ngIf="id==promocode._id" (click)="readLess()">Read Less <i class="fa fa-angle-up" aria-hidden="true"></i></button>
+
+                                    <!-- <button type="button" class="btn btn-custom-primary" disabled mdbWavesEffect>Copied</button> -->
+                                </div>
+                                <div class="text-center spinner" *ngIf='isShowSpinner'>
+                                  <div class="spinner-border text-primary" role="status">
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<ng-template #template>
+    <div class="modal-body offer my-0">
+        <p class="promo">MB30</p>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h6 class="title">Get flat Rs.30 cashback using Amazon Pay</h6>
+          <p class="dis">use code <span>APAY30</span> & get flat Rs.30 cashback on first transaction using Amazon Pay
+          </p>
+          <!-- <span [innerHtml]="promocode.description"></span> -->
+          <button type="button" class="btn btn-custom-primary" mdbWavesEffect>Copy Code</button>
+          <button type="button" class="btn btn-custom-primary" disabled mdbWavesEffect>Copied</button>
+    </div>
+  </ng-template>

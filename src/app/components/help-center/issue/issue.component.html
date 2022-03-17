@@ -1,0 +1,100 @@
+<main class="main">
+    <div class="container margin-top" *ngIf='deliveredOrders.length!=0'>
+      <form [formGroup]='issueForm' (ngSubmit)='raiseComplain()'>
+  
+        <div class="card" *ngFor='let order of deliveredOrders;index as i'>
+          <div class="row px-3 my-3">
+  
+            <div class="col-lg-8">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row align-items-center " (click)="showHideOrderDetail(i)" ngbTooltip="Click here to see details.">
+                    <div class="col-sm-3 col-4">
+                      <div class="custom-controls-stacked d-block">
+                        <span class="overflow-control-margin">
+                          <img class="img-fluid" src="{{order.products[0].name |image}}/{{order.products[0].images[0] |imageSize:120}}">
+                        </span>
+                        <!-- </label> -->
+                      </div>
+  
+                    </div>
+                    <div class="col-7 col-sm-8">
+                      <h3 class="order-id">Order ID:  {{order.id}}</h3>
+                      <!-- <h4 class="confirmed">confirmed </h4> -->
+                      <h4 class="delivered"> {{order.status}}</h4>
+                      <!-- <h4 class="pending">pending</h4> -->
+                      <!-- <h4 class="cancel">cancelled</h4> -->
+                      <h4 class="order-date">{{order.date| date:'dd/MM/yyyy'}}</h4>
+                      <h4 class="order-price">{{order.amount}}</h4>
+                    </div>
+                    <div class="col-1 text-right">
+                      <i [ngClass]="(isProduct===i+1 ||order.id==orderId)?'fa fa-angle-down':'fa fa-angle-right'" aria-hidden="true"></i>
+                    </div>
+                    <!-- <ion-col size="1">
+                      <i [ngClass]="(isHide===i+1)?'fa fa-angle-down':'fa fa-angle-right'" aria-hidden="true"></i>
+                    </ion-col> -->
+                  </div>
+                  <hr>
+                  <!-- all product -->
+                  <div *ngIf="isProduct===i+1 || order.id==orderId">
+                  <div *ngFor='let product of order.products' >
+                    <div class="row align-items-center all-order">
+                      <div class="col-2">
+                        <div class="custom-controls-stacked d-block">
+                          <label class="custom-control overflow-checkbox">
+                            <input type="checkbox" class="overflow-control-input" value="{{product._id}}" name="isActive" (change)='getSelectedProducts($event,product._id,order._id,product.mbSku)'>
+                            <span class="overflow-control-indicator"></span>
+                            <span class="overflow-control-margin">
+                              <img class="img-fluid" src="{{product.name |image}}/{{product.images[0] |imageSize:60}}">
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <h5 class="mb-1">{{product.name}}</h5>
+                        <h6 class="mb-1"><i class="fa fa-inr mr-1" aria-hidden="true"></i>{{product.sellPrice}}</h6>
+                        <h6 class="mb-1 text-muted">{{order.productCount}}x{{product.recommendedAttribute}}</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /all product  -->
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+  
+  
+        <!-- Form section -->
+        <div class="row">
+          <div class="col-lg-8">
+            <h5 class="my-5 ml-1">Please enter your query here</h5>
+            <label class="ml-1 mb-0 grey-text" for="email">Your Email (We will reply to you on this email)</label>
+            <div class="input-group">
+              <div class="field">
+                <input type="email" id="email" class="form-control" name="email" placeholder="Enter your email" formControlName='email'>
+                <small class='text-danger' *ngIf='issueForm.get("email").touched &&issueForm.get("email").pristine'>Email is required</small>
+                <small class="text-danger" *ngIf='issueForm.get("email").dirty && issueForm.get("email").invalid'>Please enter a valid email</small>
+              </div>
+            </div>
+              <label class="ml-1 mt-3 mb-0 grey-text text-left" for="message">Message(Tell us about the issue)</label>
+              <div class="input-group">
+                <div class="field">
+                  <textarea class="form-control" id="message" wrap='off' rows="6" cols="200" name="message"
+                  placeholder="Enter your message" formControlName='message'>
+              </textarea>
+              <small class='text-danger' *ngIf='issueForm.get("message").touched && issueForm.get("message").pristine'>Message is required</small>
+
+                </div>
+              </div>
+              <button mdbBtn type="submit" class="my-4 bag-btn mx-1" mdbWavesEffect [disabled]='!issueForm.valid'>RAISE A COMPLAINT</button>
+            
+          </div>
+        </div>
+      </form>
+    </div>
+  
+  </main>
+  

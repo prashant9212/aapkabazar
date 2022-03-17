@@ -1,0 +1,278 @@
+<!--Navbar-->
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PXCZFKW"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+<div class="container">
+<div class="desktop-2">
+<mdb-navbar class="mb-navbar" SideClass="navbar navbar-expand-lg navbar-light fixed-top" [containerInside]="false">
+
+  <!-- Navbar brand -->
+  <mdb-navbar-brand>
+      <a class="navbar-brand" [routerLink]="['/']">
+          <img class="logo" src="../../../assets/image/logo.png">
+      </a>
+
+  </mdb-navbar-brand>
+  <nav class="responsive-not-2">
+    <ul class="menu">
+      <li class="head-category"> <img src="../../../assets/image/category.png"> All Category</li>
+      <li *ngFor="let categorys of allcatData">
+        <h3>
+          <a [routerLink]="['/'+categorys.urlKey+'/c/'+categorys._id]">
+            {{categorys.name | titlecase}}
+          </a>
+          </h3>
+        <div class="heade-link">
+          <h4>
+            <a [routerLink]="['/'+categorys.urlKey+'/c/'+categorys._id]">
+              {{categorys.name | titlecase}}
+            </a>
+          </h4>
+          <ul *ngFor="let childrencategorys of categorys.children">
+            <li>
+              <a [routerLink]="['/'+categorys._name+'/'+childrencategorys.urlKey+'/c/'+categorys._id+'/'+childrencategorys._id]">
+                {{childrencategorys.name | titlecase}}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </nav>
+  <!-- Collapsible content -->
+  <!-- <button type="button" color="light" class="location-btn btn-light btn categories" ><img class="category-img" src="../../../assets/image/category.png">
+    All Categories<i class="fa fa-angle-down" aria-hidden="true"></i></button>
+    <div class="dropdown-content">
+      <a href="#">Link 1</a>
+      <a href="#">Link 2</a>
+      <a href="#">Link 3</a>
+    </div> -->
+<!--vishwa code starts here
+<div *ngif='hide'>
+  Hello World
+</div>
+<button (click)=funcs() class="hello-world"><i class="fa fa-trash" style="color:red"></i>Hello</button>
+
+-->
+
+
+
+<div class=phone-not>
+    <div class="dropdown">
+      <button class="dropbtn"  class="location-btn btn-light btn categories"><i class="fa fa-bars" aria-hidden="true"></i><span class="responsive"><img class="category-img" src="../../../assets/image/category.png">
+        All Categories<i class="fa fa-angle-down" aria-hidden="true"></i></span></button>
+        <div class="dropdown-content">
+          <ul class="categories-box">
+            <ng-container *ngIf="rootCategory?.length>0">
+              <li *ngFor="let category of rootCategory">
+                <a [routerLink]="['/'+category.urlKey+'/c/'+category._id]">
+                  <img src="{{ category.id | image:'cat' }}/{{ category.images[0]}}" onerror="this.src='../../../assets/image/no-category.png';" [alt]="category?.name" [title]="category._name" *ngIf='category.images?.length>0'>
+                  {{category.name}}</a>
+              </li>
+            </ng-container>
+          </ul>
+  </div>
+  </div>
+</div>
+
+  <links>
+
+      <!-- Links -->
+
+
+
+      <!-- search bar -->
+      <ul class="navbar-nav search-navbar">
+          <li class="nav-item active">
+              <form class="form-inline md-form form-sm active-pink-2 mobile-s">
+                  <input class="form-control form-control-sm mr-3"  type="text" placeholder="Search for items..." #search
+                      (keyup)="searchProduct($event)" aria-label="Search" mdbInput [formControl]="searchKey"
+                      (click)='openSearchModal()'>
+                  <mdb-icon class="mb-search-icon" fas icon="search" (click)='searchResultSubmit(search)'  aria-hidden="true"></mdb-icon>
+              </form>
+
+              <!-- search Modal -->
+              <ng-template #searchModal>
+                  <!-- <div class="modal-content"> -->
+                    <div class="modal-search">
+                  <div class="modal-body search-bar">
+                      <ul class="list-unstyled" *ngIf="searchProductList?.length!=0; else categoryBlock">
+                          <li *ngFor="let product of searchProductList"
+                              (click)='searchResultPage(product.name,product.category._id)' class="m-2">
+                              <div class="rippel"></div>
+                              <img src="{{ product?.id | image}}/{{ product?.images[0] | imageSize:24 }}"
+                                  class="category-img" onerror="this.src='../../../assets/image/no-category.png';">
+                                  <p>
+                                    <span>
+                                      {{ product?.name | titlecase}}
+                                      <!---{{ product?.recommendedAttribute | titlecase }}---->
+                                      <span class="searchCatName"> in {{ product?.category?.name | titlecase }}</span>
+                                    </span>
+                                  </p>
+                          </li>
+                      </ul>
+                      <ng-template #categoryBlock>
+                          <ul class="list-unstyled">
+                              <li class='m-2' *ngFor="let category of rootCategory"
+                                  [routerLink]="['/'+category.urlKey+'/c/'+category._id]"
+                                  (click)='searchModalRef.hide()'>
+                                  <div class="rippel"></div>
+                                  <img src="{{ category.id | image:'cat' }}/{{ category.images[0]}}" onerror="this.src='../../../assets/image/no-category.png';"
+                                      class="category-img">
+                                  <span class="ml-3">{{ category?.name | titlecase}}</span>
+                              </li>
+                          </ul>
+                      </ng-template>
+                  </div>
+                  <button *ngIf="searchProductList?.length!=0;" (click)='searchResultSubmit(search)' class="btn bag-btn">Show More</button>
+                </div>
+
+                  <!-- </div> -->
+              </ng-template>
+              <!-- search Modal -->
+          </li>
+      </ul>
+      <ul class="navbar-nav location-navbar">
+        <li class="nav-item active">
+            <button type="button" class="location-btn desktop-1" mdbBtn color="light" mdbWavesEffect
+                (click)=showCityDropdown()>
+                <i *ngIf="city.name!=null; else elseBlock" class="fas fa-map-marker-alt location-icon"></i>
+                <span class="responsive">{{ city?.areaName ? city?.areaName : city?.name }}</span>
+                <ng-template #elseBlock><span class="responsive">Enter Your Pin Code</span><i class="fa fa-map-marker" aria-hidden="true"></i></ng-template>
+                </button>
+        </li>
+    </ul>
+      <!-- /search bar -->
+      <!-- Links -->
+      <ul class="navbar-nav ml-auto nav-flex-icons align-items-center user-dropdown">
+        <li class="nav-item">
+          <a class="nav-link account" mdbwaveseffect [routerLink]="['/bag']" routerLinkActive="router-link-active">
+            <!--<img src="assets/image/cart.png">--->
+            <i class="fa fa-shopping-cart"></i>
+            <span class="responsive">Cart</span>
+            <!-- <span class="cart-no">2</span> -->
+              <div class="badge-img" *ngIf="bagQuantity.value!=0">{{ bagQuantity.value }}</div>
+
+          </a>
+      </li>
+          <li class="nav-item" *ngIf="!user._id">
+              <a class="nav-link" mdbwaveseffect>
+                  <button type="button" class="login-btn" mdbBtn color="link" mdbWavesEffect
+                      (click)=login()><i class="fa fa-user-o" aria-hidden="true"></i><span>Login</span>
+                    </button>
+              </a>
+          </li>
+          <li class="nav-item dropdown" dropdown *ngIf="user._id">
+              <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light MobProfileName"
+                  mdbWavesEffect> <i class="fa fa-user-o"></i> Profile</a>
+              <div class="dropdown-menu dropdown-profile">
+                  <a class="dropdown-item" [routerLink]="['/profile']">
+                      <img class="mr-3" height="16" src="assets/image/icon/users.png">
+                      <span *ngIf="user.name || user.email; else elseBlock">
+                          {{ (user.name ? user.name : user?.email) | capitalize }}</span>
+                      <ng-template #elseBlock>{{ user.phoneNo }}</ng-template>
+                      <span class="profile-icon-right"><i aria-hidden="true" class="fa fa-angle-right"></i></span>
+                  </a>
+                  <!-- <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" [routerLink]="['/wallet']"><img class="mr-3" height="16"
+                          src="assets/image/icon/wallet.png">Wallet
+                      <mdb-badge class="wallet-badge"><i class="fa fa-inr" aria-hidden="true"></i> {{ balance }}
+                      </mdb-badge>
+                  </a> -->
+                  <div class="dropdown-divider"></div>
+                  <!-- <a class="dropdown-item" [routerLink]="['/subscription']"><img class="mr-3" height="16"
+                          src="assets/image/icon/subscribe.png"> Subscription / Morning Buy
+                  </a>
+                  <div class="dropdown-divider"></div> -->
+                  <a class="dropdown-item" [routerLink]="['/order']"><img class="mr-3" height="16"
+                          src="assets/image/icon/packaging.png"> Order
+                  </a>
+                  <div class="dropdown-divider"></div>
+
+                  <a class="dropdown-item" [routerLink]="['/address']"><img class="mr-3" height="16"
+                          src="assets/image/icon/direction-sign.png"> Address
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <!-- <a class="dropdown-item" [routerLink]="['/referralcode']"><img class="mr-3" height="16"
+                          src="assets/image/icon/referral.png"> Refer & Earn
+                  </a>
+                  <div class="dropdown-divider"></div> -->
+                  <a class="dropdown-item" [routerLink]="['/help-center']" [queryParams]="{isHelp:true}"><img
+                          class="mr-3" height="16" src="assets/image/icon/24-hours.png"> Help Center</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" [routerLink]="['/offers']"><img class="mr-3" height="16"
+                          src="assets/image/icon/offers.png"> Offers
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" [routerLink]="['/profile']"><img class="mr-3" height="16"
+                    src="assets/image/icon/users.png"> Edit Profile
+            </a>
+            <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" (click)="logout()"><img class="mr-3" height="16"
+                          src="assets/image/icon/logout.png"> Log Out
+                  </a>
+              </div>
+          </li>
+
+
+      </ul>
+  </links>
+  <!-- Collapsible content -->
+
+
+
+</mdb-navbar>
+</div>
+</div>
+<!--/.Navbar-->
+
+
+
+<!-- Location section -->
+<ng-template #locationModal>
+
+  <div class="new-location">
+
+      <!-- <div mdbModal class="modal fade left " tabindex="-1" role="dialog" aria-labelledby="mylocationModalLabel" aria-hidden="true"> -->
+      <!-- <div class="modal-dialog modal-full-height modal-left" role="document"> -->
+
+      <div class="modal-content location-modal">
+        <button type="button" class="close pull-right" aria-label="Close" (click)=closeLoginModal()>
+          <span aria-hidden="true">×</span>
+        </button>
+          <div class="modal-header">
+            <h3>Welcome to APP KA BAZAR</h3>
+            <p class="delivery-location">Please provide your delivery pin code.</p>
+            <div class="border-modal-head"></div>
+              <form class="form-inline md-form">
+                  <div class="select-city">
+                      <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                      <input class="form-control form-control-sm " type="text" placeholder="Enter Your Location" appCityGoogleAutocomplete placeholder="Enter Your Pin Code"
+                          name="cityName"  [(ngModel)]="locationSearchText" (onAddressSelect)='searchCity($event)'>
+
+                  </div>
+                  <div class="content-location">
+                  <p class="loaction-p">OR</p>
+                </div>
+                  <button class="btn detect"  appDetectLocation  (onLocationDetected)="searchCity($event)" mdbWavesEffect>  <i class="fa fa-location-arrow mr-1" aria-hidden="true"></i>Detect my location</button>
+              </form>
+          </div>
+          <!-- <div class="modal-body">
+              <ul class="llist-style-none pl-0 mb-0 m-2 z-depth-1 bg-white">
+                  <li class="city">Select City</li>
+                  <li class="city-list" *ngFor="let city of cities | filter : locationSearchText"
+                      (click)=setCity(city)>
+                      <span>{{city.name}}</span>
+                      <img class="city-img" src="{{city?.name | image:'city'}}/{{city?.image[0]}}" alt="">
+                  </li>
+              </ul>
+          </div> -->
+      </div>
+      <!-- </div> -->
+      <!-- </div> -->
+  </div>
+</ng-template>
+<!-- /Location section -->

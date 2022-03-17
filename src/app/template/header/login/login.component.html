@@ -1,0 +1,207 @@
+<!-- <div style="overflow-y: auto" class="modal fade login" tabindex="-1" role="dialog" aria-labelledby="myloginModalLabel" aria-hidden="true"> -->
+  <div class="modal-dialog modal-full-height modal-bottom modal-right" role="document">
+    <div class="modal-content">
+        <div class="modal-body signin-modal">
+            <button type="button" class="close pull-right" aria-label="Close" (click)=closeLoginModal()>
+                <span aria-hidden="true">×</span>
+            </button>
+            <div class="row">
+                <div class="col-md-6">
+                  <div class="log-img mobile-none">
+                        <img src="assets/image/cart-login.png" >
+                      </div>
+                     </div>
+                <div class="col-md-6 p-2">
+                  <div class="sing-account">
+                    <h4 class="font-weight-bold">Login</h4>
+                    <div class="border-line-2"></div>
+                    <!-- <hr class="grey-hr accent-2 mb-4 mt-0 d-block " style="width: 25%;"> -->
+                    <div class=" d-block m-auto">
+                        <form [hidden]="login" [formGroup]="loginForm" (ngSubmit)="register()">
+                            <div class="form-group">
+                                <div class="card">
+                                    <div class="md-form my-form">
+                                        <input #myInput mdbInput type="text" placeholder="Enter Mobile Number" id="userId"
+                                            class="form-control opt-number LoginMobNo" formControlName="userId">
+                                        {{myInput.focus()}}
+                                    </div>
+                                </div>
+                                <small class="text-required"
+                                    *ngIf="loginForm.get('userId').hasError('required') && !loginForm.get('userId').valid && loginForm.get('userId').touched">Mobile
+                                    number is required</small>
+                                <small class="text-required"
+                                    *ngIf="loginForm.get('userId').hasError('pattern') && (loginForm.get('userId').dirty || loginForm.get('userId').touched)">Please
+                                    enter valid phone number</small>
+                            </div>
+                            <div class="mt-4">
+                                <button mdbBtn type="submit" mdbWavesEffect
+                                    class="btn btn-custom-primary" *ngIf='!isShowSpinner'>Login</button>
+                                    <div class="spinner-border text-primary login-spinner" *ngIf='isShowSpinner'></div>
+                                </div>
+                        </form>
+                        <form [hidden]="password" [formGroup]="passwordForm" (ngSubmit)="validatePassword()">
+                          <div class="form-group">
+                              <div class="card">
+                                  <div class="md-form my-form">
+                                      <input mdbInput type="password" placeholder="Enter Password " id="password"
+                                          class="form-control LoginMobNo" formControlName="password">
+                                      <div class="forgot pointer" (click)="forgotPassword()">Forgot Password ?
+                                      </div>
+                                  </div>
+                              </div>
+                              <small
+                                  *ngIf=" passwordForm.get('password').hasError('required')&& passwordForm.get('password').touched && (!(passwordForm.get('password').valid))"
+                                  class="text-danger">Password
+                                  is required</small>
+                          </div>
+                          <div class="mt-4">
+                              <button mdbBtn type="submit" mdbWavesEffect
+                                  class="btn btn-custom-primary" *ngIf='!isShowSpinner'>Login</button>
+                                  <div class="spinner-border text-primary login-spinner" *ngIf='isShowSpinner'></div>
+                               </div>
+                               <p class="or-login">or</p>
+                               <div class="" >
+                                <p  *ngIf='!isShowResendOtp' class="mb-1 custom-primary-color pointer" (click)="loginOtpSend()">Login with OTP</p>
+                                <div class="spinner-border text-primary" *ngIf='isShowResendOtp'></div>
+                             </div>
+                      </form>
+                        <form [hidden]='otp' [formGroup]="otpForm" (ngSubmit)="verifyOtp()">
+                          <div class="otp">
+                              <p>Enter 4 digit code sent to your phone/Email <br> {{userData.userId}} if wong Please <a style="color: #000;font-weight: 500;" (click)="eidtmobile()">Edit</a>
+                                  <div class="for-group">
+                                      <div class="form-inline md-form my-0">
+                                          <input appSkipOtp type="number" class="form-control mr-1"
+                                              formControlName="dig1">
+                                          <input appSkipOtp type="number" class="form-control mr-1"
+                                              formControlName="dig2">
+                                          <input appSkipOtp type="number" class="form-control mr-1"
+                                              formControlName="dig3">
+                                          <input appSkipOtp type="number" class="form-control mr-1"
+                                              formControlName="dig4">
+                                      </div>
+                                      <small class="text-danger"
+                                          *ngIf="(!otpForm.get('dig1').valid && otpForm.get('dig1').touched)||(!otpForm.get('dig2').valid && otpForm.get('dig2').touched)||(!otpForm.get('dig3').valid && otpForm.get('dig3').touched)||(!otpForm.get('dig4').valid && otpForm.get('dig4').touched)">A
+                                          valid otp is required</small>
+                                      <div class="mt-0" >
+                                          <p  *ngIf='!isShowResendOtp' class="mb-1 custom-primary-color pointer resendotp" (click)="resendOtp()">Resend
+                                              OTP
+                                          </p>
+                                          <div class="spinner-border text-primary" *ngIf='isShowResendOtp'></div>
+                                      </div>
+                                  </div>
+                          </div>
+                          <ng-container *ngIf='isShowRefralOption'>
+                          <div class="form-group mt-3">
+                              <label><input type="checkbox" value="" (change)='isReferalCode=!isReferalCode'>  Having Referal Code</label>
+                            </div>
+                            <div class="form-group" *ngIf='isReferalCode'>
+                              <label for="pwd">Enter Referal Code</label>
+                              <input type="text" class="form-control" id="pwd" formControlName='referalCode'>
+                            </div>
+                          </ng-container>
+                          <div class="mt-4">
+                              <button mdbBtn type="submit" mdbWavesEffect class="btn btn-custom-primary"  *ngIf='!isShowSpinner'>Next</button>
+                              <div class="spinner-border text-primary login-spinner" *ngIf='isShowSpinner'></div>
+                          </div>
+                      </form>
+                        <form [hidden]="addPassword" [formGroup]="addPasswordForm" (ngSubmit)="createPassword()">
+                            <div class="form-group">
+                                <div class="card">
+                                    <div class="md-form my-form">
+                                        <input mdbInput type="password" placeholder="*********" id="newpassword"
+                                            class="form-control" formControlName="password">
+                                        <label for="newpassword" class="">Enter New Password </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="card">
+                                    <div class="md-form my-form">
+                                        <input mdbInput type="password" placeholder="*********" id="confirmpassword"
+                                            class="form-control" formControlName="confirmPassword">
+                                        <label for="confirmpassword" class="">Confirm Password </label>
+                                    </div>
+                                </div>
+                                <div *ngIf="addPasswordForm.touched">
+                                    <small *ngIf="addPasswordForm.controls.confirmPassword.invalid"
+                                        class="text-danger">Passwords are not same</small>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <button mdbBtn type="submit" mdbWavesEffect class="btn btn-custom-primary"
+                                    *ngIf='!isShowSpinner'>Login</button>
+                                    <div class="spinner-border text-primary login-spinner" *ngIf='isShowSpinner'></div>
+
+                            </div>
+
+                        </form>
+                        <form [hidden]="forget" [formGroup]="userCheckForm" (ngSubmit)="checkUser()">
+                            <div class="form-group">
+                                <div class="card">
+                                    <div class="md-form my-form">
+                                        <input mdbInput type="text" placeholder="Enter Mobile Number" id="userId"
+                                            class="form-control LoginMobNo" formControlName="userId">
+                                    </div>
+                                </div>
+                                <small class="text-required"
+                                    *ngIf="userCheckForm.get('userId').hasError('required') && !userCheckForm.get('userId').valid && userCheckForm.get('userId').touched">Mobile
+                                    number is required.
+                                </small>
+                                <small class="text-required"
+                                    *ngIf="userCheckForm.get('userId').hasError('pattern') && (userCheckForm.get('userId').dirty || userCheckForm.get('userId').touched)">Please
+                                    enter valid phone number.
+                                </small>
+                            </div>
+                            <div class="mt-4">
+                                <button mdbBtn type="submit" mdbWavesEffect
+                                    class="btn btn-custom-primary" *ngIf='!isShowSpinner'>SignIn</button>
+                                    <div class="spinner-border text-primary login-spinner" *ngIf='isShowSpinner'></div>
+                                </div>
+                        </form>
+                        <form [hidden]='otplogin' [formGroup]="otpForm" (ngSubmit)="OtpByOTP()">
+                          <div class="otp">
+                              <p>Please enter the OTP sent to {{userData.userId}} <a style="color: #000; font-weight: 500;" (click)="eidtmobile()">Change Number.</a>
+                                  <div class="for-group">
+                                      <div class="form-inline md-form my-0">
+                                          <input appSkipOtp type="number" class="form-control mr-1"
+                                              formControlName="dig1">
+                                          <input appSkipOtp type="number" class="form-control mr-1"
+                                              formControlName="dig2">
+                                          <input appSkipOtp type="number" class="form-control mr-1"
+                                              formControlName="dig3">
+                                          <input appSkipOtp type="number" class="form-control mr-1"
+                                              formControlName="dig4">
+                                      </div>
+                                      <small class="text-danger"
+                                          *ngIf="(!otpForm.get('dig1').valid && otpForm.get('dig1').touched)||(!otpForm.get('dig2').valid && otpForm.get('dig2').touched)||(!otpForm.get('dig3').valid && otpForm.get('dig3').touched)||(!otpForm.get('dig4').valid && otpForm.get('dig4').touched)">A
+                                          valid otp is required</small>
+                                      <div class="otpNotRecd" >
+                                        Not received your code? <p  *ngIf='!isShowResendOtp' class="mb-1 custom-primary-color pointer resendotp" (click)="resendOtp()">Resend
+                                              OTP
+                                          </p>
+                                          <div class="spinner-border text-primary" *ngIf='isShowResendOtp'></div>
+                                      </div>
+                                  </div>
+                          </div>
+                          <!-- <ng-container *ngIf='isShowRefralOption'>
+                          <div class="form-group mt-3">
+                              <label><input type="checkbox" value="" (change)='isReferalCode=!isReferalCode'>  Having Referal Code</label>
+                            </div>
+                            <div class="form-group" *ngIf='isReferalCode'>
+                              <label for="pwd">Enter Referal Code</label>
+                              <input type="text" class="form-control" id="pwd" formControlName='referalCode'>
+                            </div>
+                          </ng-container> -->
+                          <div class="mt-4">
+                              <button mdbBtn type="submit" mdbWavesEffect class="btn btn-custom-primary"  *ngIf='!isShowSpinner'>Verify OTP</button>
+                              <div class="spinner-border text-primary login-spinner" *ngIf='isShowSpinner'></div>
+                          </div>
+                      </form>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+<!-- </div> -->

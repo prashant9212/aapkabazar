@@ -1,0 +1,167 @@
+<!-- Modal start from here -->
+<!-- <div mdbModal #addressModal="mdbModal" class="modal fade bottom" style="overflow-y: auto" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true"> -->
+<div class="modal-dialog address-modal py-0" role="document">
+    <div class="modal-content">
+        <!-- <div class="modal-header transaction-header">
+
+            <h4 class="modal-title w-100" id="myModalLabel"> Add New Address</h4>
+        </div> -->
+        <div class="modal-body" *ngIf="!isSubscription">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)=closeAddressModal()>
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <form [formGroup]="addressForm">
+                        <label class="mb-label mb-0">Area / Locality</label>
+                        <div class="area">
+                            <div class="area-box">
+                                <input type="text" id="autocomplete" formControlName="fullAddress" appGoogleAutoComplete (onAddressChange)="onChange($event)" class="mb-text" placeholder="Please Enter Delivery Pincode">
+                                <small class="alert-address"
+                                *ngIf="addressForm.controls['fullAddress'].hasError('required') && addressForm.controls['fullAddress'].touched">* This field
+                                is required</small>
+                                <small class="alert-address"
+                                *ngIf="!isUpdateAddAction && addressForm.controls['fullAddress'].valid">* No Seller found in your area</small>
+                                <small class="alert-address" style="margin-top: 13px;">{{messageForAddress}}</small>
+                              </div>
+                            <div class="area-box">
+                                <button appDetectLocation (onLocationDetected)="onChange($event)" class="btn btn-custom-primary"><i class="fa fa-location-arrow mr-2"
+                                        aria-hidden="true"></i> Detect</button>
+                            </div>
+                        </div>
+                      <div class="address-detail">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="d-flex">
+                                    <div class="custom-control custom-radio p-3">
+                                        <input type="radio" class="custom-control-input" id="home" value="home" name="type" formControlName="type">
+                                        <label class="custom-control-label custom-control-address-label black-text" for="home">Home</label>
+                                    </div>
+                                    <div class="custom-control custom-radio p-3">
+                                        <input type="radio" class="custom-control-input" id="office" value="office" name="type" formControlName="type">
+                                        <label class="custom-control-label custom-control-address-label black-text" for="office">Office</label>
+                                    </div>
+                                    <div class="custom-control custom-radio p-3">
+                                        <input type="radio" class="custom-control-input" id="other" value="other" name="type" formControlName="type">
+                                        <label class="custom-control-label custom-control-address-label black-text" for="other">Other</label>
+                                    </div>
+                                </div>
+                                <!-- for other address -->
+                                <!-- <input type="text" id="other" class="mb-text" name="type" placeholder="" formControlName="type"> -->
+                                <!-- /for other address -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="mb-label mb-0">Name</label>
+                                <input type="text" class="mb-text" formControlName="name" placeholder="">
+                                <small class="alert-address"
+                                        *ngIf="addressForm.controls['name'].hasError('required') && addressForm.controls['name'].touched">* This field
+                                        is required</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="mb-label mb-0">Mobile No</label>
+                                <input type="number" class="mb-text" formControlName="mobileNo" placeholder="">
+                                <small class="alert-address"
+                                *ngIf="addressForm.controls['mobileNo'].hasError('required') && addressForm.controls['mobileNo'].touched">* This field
+                                is required</small>
+                                <small class="alert-address" *ngIf="addressForm.controls['mobileNo'].hasError('pattern')">Please, Enter 10 digit Mobile Number.</small>
+                            </div>
+                        </div>
+                        <label class="mb-label">Flat / House / Office No.</label>
+                        <input type="text" class="mb-text" formControlName="line1" placeholder="">
+                        <small class="alert-address"
+                        *ngIf="addressForm.controls['line1'].hasError('required') && addressForm.controls['line1'].touched">* This field
+                        is required</small>
+                        <label class="mb-label">Street / Society / Office Name</label>
+                        <input type="text" class="mb-text" formControlName="line2" placeholder="">
+                        <small class="alert-address"
+                        *ngIf="addressForm.controls['line2'].hasError('required') && addressForm.controls['line2'].touched">* This field
+                        is required</small>
+                        <div class="mt-3">
+                            <button class="btn btn-lg btn-custom-primary" *ngIf="address._id!=null && !isShowSpinner" (click)=updateAddress() >UPDATE ADDRESS</button>
+                            <button class="btn btn-lg btn-custom-primary" *ngIf="address._id==null && !isShowSpinner" (click)=addAddress()>ADD ADDRESS</button>
+                            <div class="spinner-border text-primary text-center" *ngIf='isShowSpinner'></div>
+                            <button class="btn btn-light" (click)=closeAddressModal()>Cancel</button>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-body" *ngIf="isSubscription">
+            <form [formGroup]="subscriptionAddressForm">
+                <div class="row">
+                  <div class="col-md-6 ">
+                    <div class=" my-form form-group">
+                        <label for="name" class="">Name<span class="mendatoryAstrick">*</span></label>
+                      <input  type="text" id="name" class="form-control" formControlName="name">
+                    </div>
+                  </div>
+                  <div class="col-md-6 ">
+                    <div class=" my-form form-group">
+                        <label for="mobileno" class="">Mobile No<span class="mendatoryAstrick">*</span></label>
+                      <input type="number"
+                        id="mobileno" class="form-control" formControlName="phoneNo" maxlength="10">
+                    </div>
+                  </div>
+                </div>
+                <div class="row ">
+                  <div class="col-md-6 ">
+                    <div class="my-form form-group">
+                        <label for="state" class="">State<span class="mendatoryAstrick">*</span></label>
+                      <select class="browser-default custom-select" placeholder="Select state" formControlName="state" (change)=getCitiesByStateName()>
+                        <option disabled>State<span class="mendatoryAstrick">*</span></option>
+                        <option *ngFor="let state of states" [ngValue]="state" >UP</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6  ">
+                    <div class="my-form">
+                        <label for="city" class="">City<span class="mendatoryAstrick">*</span></label>
+                      <select class="browser-default custom-select" formControlName="city" (change)=getSocietiesByCityId()>
+                        <option disabled>City<span class="mendatoryAstrick">*</span></option>
+                        <option *ngFor="let city of cities" [ngValue]="city">{{ city.name | titlecase}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 ">
+                    <div class="my-form">
+                      <label for="society" class="" >Society<span class="mendatoryAstrick">*</span></label>
+                      <select class="browser-default custom-select" placeholder="Select Society" formControlName="society" (change)=getBlocksBySocityId()>
+                        <option disabled>Society<span class="mendatoryAstrick">*</span></option>
+                        <option *ngFor="let society of societies" [ngValue]="society">{{ society.name | titlecase}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6  ">
+                    <div class="my-form">
+                        <label for="block" class="">Block<span class="mendatoryAstrick">*</span></label>
+                      <select class="browser-default custom-select" placeholder="Select Block" formControlName="block">
+                        <option disabled>Block<span class="mendatoryAstrick">*</span></option>
+                        <option *ngFor="let block of blocks" [ngValue]="block">{{ block | titlecase}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 ">
+                    <div class="my-form">
+                        <label for="flat-no" class="">Flat No<span class="mendatoryAstrick">*</span></label>
+                        <input type="text" id="flatNo" class="form-control" formControlName="flatNo">
+                    </div>
+                  </div>
+                </div>
+              <!-- </div> -->
+              <div class="mt-3">
+                <button class="btn btn-custom-primary" [disabled]="subscriptionAddressForm.invalid" (click)="setAddress()">CONTINUE</button>
+              </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- </div> -->

@@ -1,0 +1,156 @@
+<footer class="page-footer font-small unique-color-morningbag">
+  <div class="footer-top">
+  <div class="container text-md-left pt-4">
+    <div class="row">
+          <div class="col-md-3 mx-auto">
+            <div class="footer-social-content">
+            <img src="assets/image/logo-main.png" class="footer-img">
+            <p>With over 10000+ Products and 1000+ Brands AapKaBazar.co is India's fastest growing online store. </p>
+            <br>
+            <div class="social-links">
+            <ul class="list-style">
+            <li><a href="https://www.facebook.com/aapkabazar.co" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+            <li><a href="https://twitter.com/aapkabazar_co" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+            <li><a href="https://www.instagram.com/aapkabazar.co/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+          </ul>
+          </div>
+          </div>
+          </div>
+            <div class="col-md-3 mx-auto infomation">
+              <div class="accordion">
+                <input type="checkbox" id="section1" class="accordion__input">
+                <label for="section1" class="accordion__label"> <h5 class="">Information<span class="responsive-2"><i class="fa fa-angle-down" aria-hidden="true"></i></span></h5></label>
+              <div class="accordion__content">
+            <p>
+              <a [routerLink]="['/about-us']">About Us</a>
+            </p>
+            <p>
+              <a [routerLink]="['/disclaimer']">Disclaimer</a>
+            </p>
+            </div>
+          </div>
+          </div>
+
+          <div class="col-md-3 mx-auto">
+            <div class="accordion">
+              <input type="checkbox" id="section2" class="accordion__input">
+              <label for="section2" class="accordion__label"> <h5 class="">Our Support<span class="responsive-2"><i class="fa fa-angle-down" aria-hidden="true"></i></span></h5></label>
+
+            <div class="accordion__content">
+            <p>
+              <a [routerLink]="['/refund-policy']">Refund Policy</a>
+            </p>
+            <p>
+              <a [routerLink]="['/privacy-policy']">Privacy Policy</a>
+            </p>
+            <p>
+              <a [routerLink]="['/terms-conditions']">Terms & Conditions</a>
+            </p>
+          </div>
+        </div>
+      </div>
+          
+
+      <div class="col-md-3 mx-auto">
+        <div class="accordion">
+          <input type="checkbox" id="section4" class="accordion__input">
+          <label for="section4" class="accordion__label"> <h5 class="">Contacts<span class="responsive-2"><i class="fa fa-angle-down" aria-hidden="true"></i></span></h5></label>
+
+
+        <div class="accordion__content">
+
+          <ul class="contact-infor">
+            <li><a href="tel:+919150030303"><i class="fa fa-phone" aria-hidden="true"></i><strong> </strong><span>+91-9150030303</span><span> (11AM - 8PM)</span></a></li>
+            <li><a href="mailto:aapkabazar.co@gmail.com" class="__cf_email__"><i class="fa fa-envelope-o" aria-hidden="true"></i><strong> </strong><span>aapkabazar.co@gmail.com</span></a></li>
+            <!-- <li><img src="assets/imgs/theme/icons/icon-clock.svg" alt="" /><strong>Hours : </strong><span>10:00 - 18:00, Mon - Sat</span></li> -->
+          </ul>
+          <div class="app-store">
+            <a href='https://play.google.com/store/apps/details?id=co.aapkabazar.app' target="_blank">
+              <img alt='Get it on Google Play' class="img-fluid mx-auto d-block"
+                src='assets/image/google.png' />
+            </a>
+            <a href='javascript:;'>
+              <img class="d-block mx-auto img-fluid" src="assets/image/apple.png">
+            </a>
+          </div>
+          <div class="payment-card">
+           <img src="assets/image/payment-method.png">
+          </div>
+
+      </div>
+    </div>
+    </div>
+    </div>
+
+  </div>
+</div>
+
+  <div class="footer-copyright  mt-2">
+    <div class="container-fluid container text-center text-md-left">
+      <div class="row d-flex align-items-center">
+        <div class="col-md-12 mx-auto ">
+          <div class=" text-center">© 2021-22 copyright all rights reserved. |
+            <a href="https://aapkabazar.co/">aapkabazar.co</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </footer>
+
+
+<!-- Footer -->
+<div class="footer-fix">
+  <a [routerLink]="['/']"> <img src="assets/image/footer-icon/home.svg"><p>Home</p></a>
+  <a [routerLink]="['/offer']"> <img src="assets/image/footer-icon/offer.svg"><p>Offers</p></a>
+  <a [routerLink]="['/all-category']"> <img src="assets/image/footer-icon/category.svg"><p>Categories</p></a>
+  <a [routerLink]="['/bag']"> <img src="assets/image/footer-icon/cart.svg"><p>Cart<span class="cart-count" *ngIf="bagQuantity.value!=0">{{ bagQuantity.value }}</span></p></a>
+</div>
+
+
+<div mdbModal #contactModal="mdbModal" style="overflow-y:scroll" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body py-0 contact-madal">
+        <div class="row">
+          <div class="col-sm-12 p-3">
+            <h4 class="text-left font-weight-bold">Contact us</h4>
+
+            <form>
+              <div class="form-group">
+                <p class="ml-1 mb-0 black-text">Enter Email</p>
+                <input type="email" class="form-control" id="email">
+              </div>
+              <div class="form-group">
+                <p class="ml-1 mb-0 mt-3 black-text">Phone No.</p>
+                <input type="number" class="form-control" id="mobile">
+
+              </div>
+              <div class="form-group">
+                <p class="ml-1 mt-4 mb-0 black-text">Message</p>
+                <div class="field span3">
+                  <textarea class="form-control" rows="4" cols="200"></textarea>
+                </div>
+              </div>
+              <div class="mt-4 text-center">
+                <button type="button" class="btn bag-btn" (click)="cancel()">Cancel</button>
+                <button type="submit" class="btn bag-btn mr-0">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="scroll-to-top" [ngClass]="{'show-scrollTop': windowScrolled}">
+  <button (click)="scrollToTop()">
+      <i class="fa fa-arrow-up"></i>
+  </button>
+</div>
+
+
+

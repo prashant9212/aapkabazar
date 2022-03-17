@@ -1,0 +1,24 @@
+<main class="main category-page">
+
+    <section class="category-section first-section AllCatPageMob">
+      <div class="container head-2">
+         <div class="bg-img"><img src="assets/image/left-head.png">
+          <h2 class="head-2">Shop By Category</h2><img src="assets/image/right-head.png"></div>
+
+          <div class="row">
+            <div class="col-md--12"></div>
+            <ng-container *ngIf="rootCategories?.length>0">
+              <div class="categories-top" *ngFor="let category of rootCategories">
+                  <a [routerLink]="['/'+category.urlKey+'/c/'+category._id]">
+                    <img src="{{ category.id | image:'cat' }}/{{ category.images[0]}}" onerror="this.src='../../../assets/image/no-category.png';" [alt]="category?.name" [title]="category._name" *ngIf='category.images?.length>0'>
+                      <h4 class="offer-dis" *ngIf="category.offertext">{{category.offertext}}</h4>
+                      <h6>{{category.name | titlecase}}</h6>
+                  </a>
+              </div>
+            </ng-container>
+          </div>
+          
+</div>
+</section>
+</main>
+

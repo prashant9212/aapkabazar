@@ -1,0 +1,112 @@
+
+<div class="product-card">
+    <div class="card">
+        <div class="productCatImg">
+            <a [routerLink]="['/'+product._name+'/p/'+product._id]">
+                <img class="img-fluid product-img" src="{{ product?.id | image}}/{{ product?.images[0] | imageSize:200 }}" [alt]="product?.name" onerror="this.src='../../../assets/image/no-product-img.png';"  angulartics2On="click"
+                angularticsAction="productDetails" [angularticsLabel]="product?.name" [angularticsProperties]="{'category': product?.category?.name}" [alt]="product?.name">
+            </a>
+        </div>
+        <div class="discount-badge" *ngIf="product.price>product.sellPrice">
+            <p>{{(((product?.price-product?.minSellPrice)/(product?.price)*100).toFixed(1)) | roundoff }}% OFF</p>
+        </div>
+        <div class="card-body py-1">
+          <p class="product-name"  [routerLink]="['/'+product._name+'/p/'+product._id]"> {{ product?.name | slice:0:60 }}</p>
+            <p class="brand-name">{{ product?.subBrand?.name }}</p>
+            <div class="row">
+                <div class="col-12 p-1">
+                    <p class="text-left text-nowrap mb-1">                     
+                        <span class="blue-text price-rate" *ngIf="bag[product?._id]?.itemQuantity > product.storeMinQuantity" ><i class="ml-1 fas fa-inr-sign" aria-hidden="true"></i> ₹{{ product?.sellPrice }}</span>
+                        <span class="blue-text price-rate" *ngIf="bag[product?._id]?.itemQuantity <= product.storeMinQuantity" ><i class="ml-1 fas fa-inr-sign" aria-hidden="true"></i> ₹{{ product?.minSellPrice}}</span>
+                        <span class=" grey-text" *ngIf="product?.sellPrice!=product?.price"><del><i
+                                    class="ml-1 fas fa-inr-sign"
+                                    aria-hidden="true"></i>₹{{ product?.price }}</del>
+                        </span>
+                        <span class="offerPrice" *ngIf="product.sellPrice > product.minSellPrice">₹{{product.minSellPrice}} Offer Price</span>
+                    </p>
+                </div>
+                <!-- <div class="col-6 p-1 text-right">
+                    <button mdbBtn type="button" class=" bag-btn-outline mb-1">{{ product?.recommendedAttribute }}</button>
+                </div> -->
+            </div>
+            <div class="row mb-2" *ngIf="product?.childProductList?.length>0">
+                <div class="col-md-12 sm-12">
+                    <select class="custom-select" (change)="getProductDetail($event.target.value)">
+                        <option *ngFor="let data of product?.childProductList" [value]="data?.productId">{{data?.recommendedAttribute}} - ₹{{data?.sellPrice}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                 <div class="col-8 col-md-6 p-1">
+                    <div class=" text-center add-remove" *ngIf="bag[product?._id]!=null">
+                        <button type="button" mdbWavesEffect class="z-depth-1 waves-effect btn-outline-light" (click)=decrementQuantity()>
+                            <i class="fa fa-minus " aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class=" waves-effect qty-btn mx-2"><span
+                                class="">{{ bag[product?._id]?.itemQuantity }}</span></button>
+                        <button type="button" mdbWavesEffect class="z-depth-1  waves-effect btn-outline-light" tooltip="Limited Quantity Avalilable. You can't add more" [isDisabled]="(bag[product?._id]?.itemQuantity<bag[product?._id]?.perUserOrderQuantity)" placement="left"
+                            (click)=incrementQuantity()>
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <button *ngIf="product?.quantity>0 && bag[product?._id]==null && product.isOrder" type="button" class="btn bag-btn" mdbWavesEffect (click)=incrementQuantity()> <span class="add">Add to cart </span></button>
+                    <p class="grey-text out-of-stock" *ngIf="product?.quantity<=0">Out Of Stock</p>
+                    <!-- <button type="button" class="btn  success-btn mb-2" mdbWavesEffect>Subscribe</button> -->
+                    <div class="mb-2 text-center add-remove-second" *ngIf="product?.isSubscription">
+                        <button type="button" class="btn success-btn mb-2" (click)="newSubscription()" *ngIf="product?.quantity>0 && !subcriptionsBag[product._id] && !isShowSpinner" mdbWavesEffect>Subscribe</button>
+                        <div class="text-center ml-3" *ngIf='isShowSpinner'>
+                            <div class="spinner-border text-primary ml-5"></div>
+                         </div>
+                        <div class="w-100 d-flex justify-content-between mb-2" *ngIf="subcriptionsBag[product._id]">
+                            <button type="button" mdbBtn mdbWavesEffect class="z-depth-1 waves-effect btn-outline-light-success" (click)="updateSubscription(product._id,subcriptionsBag[product._id]-1,'dec')">
+                                <i class="fa fa-minus " aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class=" waves-effect qty-btn mx-2"><span class="">{{subcriptionsBag[product._id]}}</span></button>
+                            <button type="button" mdbBtn mdbWavesEffect class="z-depth-1  waves-effect btn-outline-light-success" placement="left" (click)="updateSubscription(product._id,subcriptionsBag[product._id]+1,'inc')">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mb-2 text-center add-remove-second" *ngIf="product?.isMorningBuy">
+                        <button type="button" class="btn morningbuy-btn mb-2" (click)="addToMorningBuy(product._id)" *ngIf="product?.quantity>0 && !morningBuy[product._id] && !isShowSpinner" mdbWavesEffect>Aapkabazar By</button>
+                        <div class="text-center ml-3" *ngIf='isShowSpinner'>
+                            <div class="spinner-border text-primary ml-5"></div>
+                         </div>
+                        <div class="w-100 d-flex justify-content-between mb-2" *ngIf="morningBuy[product._id]">
+                            <button type="button" mdbWavesEffect class="z-depth-1 waves-effect btn-outline-light" (click)="updateMorningBuy(product._id,morningBuy[product._id]-1,'dec')">
+                                <i class="fa fa-minus " aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class=" waves-effect qty-btn mx-2"><span class="">{{morningBuy[product._id]}}</span></button>
+                            <button type="button" mdbWavesEffect class="z-depth-1  waves-effect btn-outline-light" placement="left" (click)="updateMorningBuy(product._id,morningBuy[product._id]+1,'inc')">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    </div>
+
+                <!-- <div class="col-md-6 p-1">      
+                    
+                </div>   -->
+
+            <!-- <div class="col-6 p-1">
+              <div class="right-side-1">
+              <p><a href="#"><i class="fa fa-whatsapp" aria-hidden="true"></i> Share</a></p>
+              </div>
+            </div> -->
+
+            </div>
+            <div class="member-card">
+                <img class="" src="../../../assets/image/icon/pro.png">
+                <a class="member">
+                    <span>
+                    </span> MB Pro Price:
+                    <i class=" fa fa-inr"></i> {{ product?.membershipPrice }}
+                </a>
+            </div>
+            <!-- <app-product-delivery></app-product-delivery> -->
+                <div class="timing" *ngIf="checkDateTrueORFolse(product?.dotd_from_time, product?.dotd_to_time)">
+                   {{myTimer(product?.dotd_to_time)}}
+                </div>
+        </div>
+    </div>
+</div>

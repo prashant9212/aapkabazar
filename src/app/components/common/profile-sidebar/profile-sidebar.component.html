@@ -1,0 +1,118 @@
+<div class="sidebar profileSideBar">
+    <div class="card">
+        <div class="card-body py-0 user-board">
+            <!-- Default checked -->
+            <div class="">
+                <!-- <div class="col-3 py-3">
+                    <img class="d-block mx-auto" height="64" src="assets/image/icon/user-profile.png">
+                </div> -->
+                <div class="col-12 user-profile user-dash">
+                    <p>Hello,
+                  <strong>
+                            <div *ngIf="user.name || user.email; else elseBlock">
+                                {{ (user.name ? user.name : user?.email) | titlecase }}</div>
+                            <ng-template #elseBlock>{{ user.phoneNo }}</ng-template>
+                        </strong></p>
+                </div>
+
+            </div>
+
+            <div class="row row-box pointer bg-grey mobile-none" [routerLink]="['/profile']" routerLinkActive="is-active">
+                <div class="col ">
+                    <h6 class="custom-primary-color">Edit Profile</h6>
+                </div>
+                <div class="col ">
+                    <h3 class="custom-primary-color"><i class="fa fa-angle-right float-right" aria-hidden="true"></i>
+                    </h3>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card mt-3 profile-sidebar">
+        <div class="card-body py-0">
+            <!-- <div class="row row-box pointer" [routerLink]="['/wallet']" routerLinkActive="is-active">
+                <div class="col-2">
+                    <img class="d-block mx-auto" height="32" src="assets/image/icon/wallet.png">
+                </div>
+                <div class="col-10 user-profile py-2">
+                    <h6>Wallet</h6>
+                </div>
+            </div> -->
+<!--
+            <div class="row row-box pointer" [routerLink]="['/subscription']" routerLinkActive="is-active">
+                <div class="col-2">
+                    <img class="d-block mx-auto" height="32" src="assets/image/icon/subscribe.png">
+                </div>
+                <div class="col-10 user-profile py-2">
+                    <h6>Subscription / Morning Buy</h6>
+                </div>
+            </div> -->
+            <div class="row row-box pointer proSideMain" [routerLink]="['/order']" routerLinkActive="is-active">
+                <div class="proSideLeft">
+                    <img class="d-block mx-auto" height="32" src="assets/image/icon/packaging.png">
+                </div>
+                <div class="proSideright"> Order</div>
+            </div>
+
+            <div class="row row-box pointer proSideMain" [routerLink]="['/address']" routerLinkActive="is-active">
+                <div class="proSideLeft">
+                    <img  height="32" src="assets/image/icon/direction-sign.png">
+                </div>
+                <div class="proSideright">
+                   Addresses
+                </div>
+            </div>
+
+
+            <div class="row row-box pointer proSideMain" [routerLink]="['/referralcode']" routerLinkActive="is-active">
+                <div class="proSideLeft">
+                    <img  height="32" src="assets/image/icon/referral.png">
+                </div>
+                <div class="proSideright">
+                    Refer & Earn
+                </div>
+            </div>
+
+            <div class="row row-box pointer proSideMain" [routerLink]="['/help-center']" routerLinkActive="is-active" [queryParams]="{isHelp:true}">
+                <div class="proSideLeft">
+                    <img  height="32" src="assets/image/icon/24-hours.png">
+                </div>
+                <div class="proSideright">
+                    Help Center
+                </div>
+            </div>
+
+            <!-- <div class="row px-3 mt-2 pointer" [routerLink]="['/change-password']">
+                <div class="col-2">
+                    <img class="d-block mx-auto" height="32" src="assets/image/icon/key.png">
+                </div>
+
+                <div class="col-10 user-profile py-2">
+                    <h6>Change Password</h6>
+                </div>
+                <hr class="grey-hr accent-2 mb-0 " style="width: 100%;">
+            </div> -->
+            <div class="row row-box pointer proSideMain" [routerLink]="['/offers']" routerLinkActive="is-active">
+                <div class="proSideLeft">
+                    <img  height="32" src="assets/image/icon/offers.png">
+                </div>
+                <div class="proSideright">
+                  Offers
+                </div>
+            </div>
+
+
+            <div class="row row-box pointer proSideMain" (click)=logout()>
+                <div class="proSideLeft">
+                    <img height="32" src="assets/image/icon/logout.png">
+                </div>
+                <div class="proSideright">
+                  Log Out
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

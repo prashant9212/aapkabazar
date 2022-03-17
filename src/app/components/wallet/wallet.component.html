@@ -1,0 +1,130 @@
+
+<main class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 side-menu">
+                <app-profile-sidebar></app-profile-sidebar>
+            </div>
+            <div class="col-lg-9">
+
+                <!-- New order card -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card secondary-card mb-3">
+                            <div class="card-body">
+                                <div class="wallet-box">
+                                    <div class="label">
+                                        <p class="mb-1 fw-500" color="black"><i class="fas fa-wallet mr-1"></i>Wallet Balance</p>
+                                        <p class="balance fw-500">
+                                            <mdb-icon fas icon="rupee-sign" class=""></mdb-icon>{{ balance }}</p>
+                                    </div>
+                                    <!-- <div class="label">
+                                        <p class="mb-1 fw-500" color="black"> <i class="fa fa-leaf mr-1" aria-hidden="true"></i>Veggie Cash <span><mdb-icon fas icon="rupee-sign"></mdb-icon><b>{{ cashBack?.cashback }}</b></span> Valid {{ cashBack?.expiryDate | date : 'dd/MM/yyyy'}}</p>
+                                        <p class="balance fw-500 text-warning">
+                                            <mdb-icon fas icon="rupee-sign"></mdb-icon>{{ cashBack?.cashback }}</p>
+                                    </div> -->
+                                    <!-- <div class="label">
+                                        <p class="mb-1 fw-500 text-warning"><i class="fas fa-wallet mr-1"></i>Expiry Date </p>
+                                        <p class="balance fw-500 text-warning">
+                                           {{ cashBack?.expiryDate | date : 'dd/MM/yyyy'}}</p>
+                                    </div> -->
+                                    <form [formGroup]="amountForm" (ngSubmit)="addMoney()">
+                                        <div class="row mt-3">
+                                            <div class="col-md-7">
+                                                <div class="md-form">
+                                                    <mdb-icon fas icon="rupee-sign" class="prefix black-text"></mdb-icon>
+                                                    <input mdbInput class="form-control" id="defaultForm-pass" type="number" name="money" formControlName="amount" >
+                                                    <label for="defaultForm-pass">Add Balance</label>
+                                                    <small class="alert"
+                                                    *ngIf="!amountForm.get('amount').valid ">Price is required.</small>
+                                                    <small class="alert-min-amount"
+                                                    *ngIf="amountForm.get('amount').valid && amountForm.get('amount').value<250 ">Minimum amount to be
+                                                        added is ₹ 250</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5 text-right">
+                                                <button type="submit" mdbBtn class="btn-custom-second-primary btn-sm" mdbWavesEffect>Add Money</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="add-money-btn">
+                                        <button type="button" mdbBtn class="btn-custom-second-primary btn-sm" (click)=setAmount(250) mdbWavesEffect>250</button>
+                                        <button type="button" mdbBtn class="btn-custom-second-primary btn-sm" (click)=setAmount(500) mdbWavesEffect>500</button>
+                                        <button type="button" mdbBtn class="btn-custom-second-primary btn-sm" (click)=setAmount(1000) mdbWavesEffect>1000</button>
+                                        <button type="button" mdbBtn class="btn-custom-second-primary btn-sm" (click)=setAmount(2000) mdbWavesEffect>2000</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header p-0 transaction-header">
+                        <div class="row  px-4 ">
+                            <div class="col-sm-6 pt-2" mdbWavesEffect>
+                                Aapka Bazar
+                                <p class="relative waves-light"> <strong> Balance: ₹ {{ balance }}</strong></p>
+                            </div>
+                            <div class="col-sm-6 p-2">
+                                <div class="btn-group float-right" mdbDropdown>
+                                    <button mdbDropdownToggle type="button" mdbBtn color="white" class="dropdown-toggle custum-dropdown  waves-light" mdbWavesEffect>
+                          <span class="black-text"> Sort By : </span> <strong>{{ sortArg ? sortArg :"All Payments" | capitalize}}</strong>
+                        </button>
+                                    <div class="dropdown-menu dropdown-primary custum-dropdown-menu w-100">
+                                        <a class="dropdown-item" (click)="sortBy('')">All Payments</a>
+                                        <div class="divider dropdown-divider"></div>
+                                        <a class="dropdown-item" (click)="sortBy('refund')">Refund</a>
+                                        <div class="divider dropdown-divider"></div>
+                                        <a class="dropdown-item" (click)="sortBy('paid')">Paid</a>
+                                        <div class="divider dropdown-divider"></div>
+                                        <a class="dropdown-item" (click)="sortBy('added')">Added</a>
+                                        <div class="divider dropdown-divider"></div>
+                                        <a class="dropdown-item" (click)="sortBy('pending')">Pending</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-results"
+                    infiniteScroll
+                    [infiniteScrollDistance]="2"
+                    [infiniteScrollThrottle]="50"
+                    (scrolled)="onScroll()">
+                    <div class="card-body p-0">
+                        <div class="row mx-1" *ngFor="let transaction of transactions">
+                            <div class="col-sm-6">
+                                <div class="row px-3 ">
+                                    <!-- <div class="col-sm-2  py-3">
+                                        <img class="d-block mx-auto my-2" height="50" src="assets/image/icon/paid.png">
+                                    </div> -->
+                                    <div class="col-sm-10 user-transaction py-4">
+                                        <p>{{ transaction.message | capitalize }}</p>
+                                        <p>Transaction ID : <span> {{ transaction.id }}</span></p>
+                                        <p>Status: <span class="custom-primary-color">{{ transaction.status | capitalize}}</span></p>
+                                        <p>Date & Time: <span> {{ transaction.updated | date:'medium' }}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 px-5 py-4 text-right">
+                                <p *ngIf="transaction.amount">Amount: <i class="fa fa-inr" aria-hidden="true"></i> <span>{{ transaction.amount }}</span></p>
+                                <!-- <p>PaymentMode:<span> {{ transaction.message }}</span></p> -->
+                                <p *ngIf="transaction.razorpayPayTransferAmount">Razorpay:<span>₹ {{transaction.razorpayPayTransferAmount}}</span></p>
+                                <p *ngIf="transaction.walletTransaferAmount">Mb Wallet:<span> ₹ {{transaction.walletTransaferAmount}}</span></p>
+                            </div>
+                            <hr class="grey-hr accent-2 mb-0 mt-0 d-inline-block mx-auto" style="width: 100%;">
+                        </div>
+                    </div>
+                    </div>
+                    <div class="text-center" *ngIf='isShowSpinner'>
+                        <div class="spinner-border text-primary" role="status">
+                        </div>
+                    </div>
+                    <div class="card-footer footer p-4 text-center" *ngIf="isAllTransactionEnd">
+                        <h5> No transacations found</h5>
+                    </div>
+                </div>
+                <!-- /New order card -->
+            </div>
+    </div>
+    </div>
+</main>

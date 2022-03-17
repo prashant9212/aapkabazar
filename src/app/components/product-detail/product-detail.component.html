@@ -1,0 +1,180 @@
+<!-- <app-category-header></app-category-header> -->
+<div class="text-center body-img" *ngIf="!productResponse">
+    <img src="assets/image/gif.gif">
+  </div>
+  <div *ngIf="productResponse">
+  <div class="container" *ngIf="product?.name!=null">
+    <div class="">
+        <div class="">
+            <div class="row SingalProductPage">
+                <div class="col-md-6">
+                    <div class="row ">
+                        <div class="col-md-8 offset-md-2">
+                            <div class="card product-slider">
+                                <owl-carousel-o [options]="owlOptions">
+                                    <ng-container>
+                                        <ng-template *ngFor="let img of product.images" carouselSlide>
+                                            <img src="{{ product?.id | image}}/{{ img | imageSize:400 }}"
+                                                onerror="this.src='../../../assets/image/no-product-img.png';">
+                                        </ng-template>
+                                    </ng-container>
+                                </owl-carousel-o>
+                            </div>
+  
+                        </div>
+                    </div>
+  
+                    <!-- <owl-carousel-o class="row sub-carousel mt-2" [options]="owlImageOptions">
+                        <ng-container class="col-2">
+                            <ng-template *ngFor="let img of product.images" carouselSlide>
+                                <div class="card sub-product pointer">
+                                    <img class="mx-auto img-fluid py-1 px-2"
+                                        src="{{ product?.id | image}}/{{ img | imageSize:120 }}"
+                                        alt="product"
+                                        onerror="this.src='../../../assets/image/no-product-img.png';">
+                                </div>
+                            </ng-template>
+                        </ng-container>
+                    </owl-carousel-o> -->
+                </div>
+  
+                <div class="col-md-6 p-3">
+  
+                    <h2 class="product-heading">{{ product?.name | titlecase }}</h2>
+                    <!-- <div class="border-line"></div> -->
+                    <!-- <hr class="grey-hr accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 100%;"> -->
+                    <div class="d-flex">
+                    </div>
+                    <!-- <div>
+                        <label class="mb-0 col-5 col-xl-3 col-sm-3 pl-0">Price : </label>
+                        <label class=" mt-0 grey-text"><del>₹130</del></label>
+                    </div> -->
+                    <!-- <div class="PriceSingalpro">
+                      <p *ngIf="product?.sellPrice!=product?.price">
+                          <span class="rupya"> ₹{{ product?.sellPrice }}</span>
+                          <del>₹{{ product?.price }}</del>
+                          <span class="discountBadge" *ngIf="product?.sellPrice!=product?.price">
+                              {{((product.price-product.sellPrice)/(product.price)*100).toFixed()}} % Off
+                          </span>
+                      </p>
+  
+                    </div> -->
+                    <div class="PriceSingalpro">
+                      <span *ngIf="product?.sellPrice!=product?.price"><del>₹{{ product?.price }}</del></span>
+                       <!-- <span class="rupya"> ₹{{ product?.sellPrice }}</span> -->
+                      <span class="rupya" *ngIf="bag[product?._id]?.itemQuantity > product.storeMinQuantity" ><i class="fas fa-inr-sign" aria-hidden="true"></i> ₹{{ product?.sellPrice }}</span>
+                      <span class="rupya" *ngIf="bag[product?._id]?.itemQuantity <= product.storeMinQuantity" ><i class="fas fa-inr-sign" aria-hidden="true"></i> ₹{{ product?.minSellPrice}}</span>
+                       <span class="discountBadge" *ngIf="product?.sellPrice!=product?.price">
+                          {{(((product?.price-product?.minSellPrice)/(product?.price)*100).toFixed(1)) | roundoff }}% OFF
+                       </span>
+                    </div>
+                    <div>
+                        <!-- <div class=" align-items-center mb-0">
+                            <p><strong>Brand : </strong>
+                              <a href="" *ngIf="product?.subBrand?.name"  class="brand-apka">{{ product?.subBrand?.name | titlecase }}</a>
+                              <a href="" *ngIf="!product?.subBrand?.name"  class="brand-apka">Brand no found</a>
+                            </p>
+                        </div> -->
+                    </div>
+                    <!-- <div class=" align-items-center mb-0">
+                        <ng-template #notStock>
+                            <label class=" mt-0 grey-text">Out of Stock</label>
+                        </ng-template>
+                    </div> -->
+                    <!-- <div class=" align-items-center detail mb-0">
+                        <p>Available in :<br>
+                        <button mdbBtn type="button" class=" bag-btn-outline detail-button-2"
+                            mdbWavesEffect>{{ product?.recommendedAttribute }}</button></p>
+                    </div> -->
+                    <div class="row" *ngIf="product?.childProductList?.length>0">
+                        <div class="col-xl-4 col-6">
+                            <select class="custom-select"  (change)="getProduct($event.target.value)">
+                                <option *ngFor="let data of product?.childProductList"  [value]="data?.productId">{{data?.recommendedAttribute}} - ₹{{data?.sellPrice}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <h6>&nbsp; SKU : {{ product?.sku }}</h6>
+                    <div class="row mt-4 addTocartBtn">
+                        <div class="col-xl-4 col-6" *ngIf="bag[product?._id]!=null">
+                            <button type="button" class="mt-1 pt-2 waves-effect btn-outline-light"
+                                (click)=decrementQuantity()>
+                                <i class="fa  fa-minus " aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class=" waves-effect  qty-btn"><span class="">{{ bag[product?._id]?.itemQuantity }}</span></button>
+                            <button type="button" class="pt-2  waves-effect btn-outline-light"  tooltip="Limited Quantity Avalilable. You can't add more" [isDisabled]="(bag[product?._id]?.itemQuantity<bag[product?._id]?.perUserOrderQuantity)" (click)=incrementQuantity() placement="bottom">
+                                <i class="fa fa-plus " aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="col-xl-4 col-6">
+                        <button class="btn btn-custom-second-primary mt-1 mb-0"
+                            *ngIf="product?.quantity!=0 && bag[product?._id]==null" (click)=incrementQuantity()>Add to cart</button>
+                        <p class="grey-text out-of-stock" *ngIf="product?.quantity==0">Out Of Stock</p>
+                    </div>
+                    </div>
+                    
+                    <div class="apkabazar">
+                    <h5 class="why-heading">Why Shop from Aap Ka Bazar?</h5>
+                    <div class="row mb-usp">
+                        <ul class="SignalPageAKB">
+                        <li>
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <img src="assets/image/detail-1.png" class="img-main-d">
+                                </div>
+                                <div class="ml-2">
+                                    <!-- <h5 class="mb-0">Original Branded Products</h5> -->
+                                    <p class="icon-detail">Original Branded Products</p>
+                                </div>
+                            </div>
+                          </li>
+  
+                        <li>
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <img src="assets/image/detail-2.png" class="img-main-d">
+                                </div>
+                                <div class="ml-2">
+                                    <!-- <h5 class="mb-0">Easy return & refunds</h5> -->
+                                    <p class="icon-detail">Pure & Hygenically Packed</p>
+                                </div>
+                            </div>
+                          </li>
+                        <li>
+                          <div class="d-flex align-items-center">
+                              <div>
+                                  <img src="assets/image/detail-3.png" class="img-main-d">
+                              </div>
+                              <div class="ml-2">
+  
+                                  <p class="icon-detail">Great Daily Deals Discount</p>
+                              </div>
+                          </div>
+                      </li>
+                    </ul>
+  
+                    </div>
+                    </div>
+                </div>
+            </div>
+  
+  
+                <div class="row SingalDisBox">
+                  <tabset type="pills" class="pills">
+                      <tab heading="Description">
+                          <hr class="grey-hr accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 100%;">
+                          <p class="px-3 mb-3" [innerHtml]='product?.description'></p>
+                      </tab>
+                  </tabset>
+                </div>
+  
+                <!-- <div class="SingalRetaledPro">
+                  <h4>Recently Bought Product </h4>
+                  <app-product-carousel [products]="mostViewProducts" [heading]="'Recently View Products'" class="product-main"></app-product-carousel>
+                </div> -->
+  
+        </div>
+    </div>
+  
+  </div>
+  </div>
+  
